@@ -7,20 +7,23 @@ import type { Author, Article, Event } from "@/lib/types";
 
 // --- Seed Data (for initial setup) ---
 
-const authorsData: Omit<Author, 'id'>[] = [
+let authorsData: Author[] = [
   {
+    id: 'author-1',
     name: 'Julien Renault',
     avatarUrl: 'https://picsum.photos/seed/author1/100/100',
     imageHint: 'man portrait',
     bio: 'Julien is a Paris-based fashion journalist and critic, known for his sharp analysis of couture and ready-to-wear. He has contributed to major fashion publications for over a decade.'
   },
   {
+    id: 'author-2',
     name: 'Lexi Chen',
     avatarUrl: 'https://picsum.photos/seed/author2/100/100',
     imageHint: 'woman portrait',
     bio: 'Lexi is a culture writer and photographer based in New York. Her work explores the intersection of street style, music, and art, capturing the zeitgeist of modern youth culture.'
   },
    {
+    id: 'author-3',
     name: 'Simone Jackson',
     avatarUrl: 'https://picsum.photos/seed/author3/100/100',
     imageHint: 'woman smiling',
@@ -28,8 +31,10 @@ const authorsData: Omit<Author, 'id'>[] = [
   }
 ];
 
-const articlesData: Omit<Article, 'id' | 'authorId'>[] = [
+let articlesData: Article[] = [
     {
+    id: 'article-1',
+    authorId: 'author-1',
     slug: 'asap-rocky-kanye-west-new-fashion-royalty',
     title: 'A$AP Rocky & Kanye West: The New Fashion Royalty',
     subtitle: 'How two hip-hop icons reshaped the landscape of modern fashion.',
@@ -43,6 +48,8 @@ const articlesData: Omit<Article, 'id' | 'authorId'>[] = [
     editorsPick: false,
   },
   {
+    id: 'article-2',
+    authorId: 'author-2',
     slug: 'dior-enduring-power-of-the-new-look',
     title: 'Dior: The Enduring Power of the New Look',
     subtitle: "Over 75 years later, Christian Dior's revolutionary silhouette continues to inspire.",
@@ -56,6 +63,8 @@ const articlesData: Omit<Article, 'id' | 'authorId'>[] = [
     editorsPick: true,
   },
   {
+    id: 'article-3',
+    authorId: 'author-2',
     slug: 'age-of-the-supermodel-beyond-the-runway',
     title: 'The Age of the Supermodel: Beyond the Runway',
     subtitle: 'From runway stars to cultural icons and business moguls.',
@@ -69,6 +78,8 @@ const articlesData: Omit<Article, 'id' | 'authorId'>[] = [
     editorsPick: false,
   },
   {
+    id: 'article-4',
+    authorId: 'author-1',
     slug: 'balenciaga-from-couture-to-street-culture',
     title: 'Balenciaga: From Couture to Street Culture',
     subtitle: "Under Demna's vision, a storied couture house became the king of streetwear.",
@@ -82,6 +93,8 @@ const articlesData: Omit<Article, 'id' | 'authorId'>[] = [
     editorsPick: true,
   },
   {
+    id: 'article-5',
+    authorId: 'author-3',
     slug: 'interview-with-hedi-slimane',
     title: 'An Interview With Hedi Slimane',
     subtitle: 'The enigmatic designer on his vision for Celine, photography, and the power of youth.',
@@ -95,6 +108,8 @@ const articlesData: Omit<Article, 'id' | 'authorId'>[] = [
     editorsPick: false,
   },
   {
+    id: 'article-6',
+    authorId: 'author-3',
     slug: 'art-in-the-age-of-instagram',
     title: 'Art in the Age of Instagram',
     subtitle: 'How social media has changed the way we create, consume, and value art.',
@@ -108,6 +123,8 @@ const articlesData: Omit<Article, 'id' | 'authorId'>[] = [
     editorsPick: true,
   },
   {
+    id: 'article-7',
+    authorId: 'author-2',
     slug: 'the-rise-of-k-pop-a-global-phenomenon',
     title: 'The Rise of K-Pop: A Global Cultural Phenomenon',
     subtitle: 'Beyond the music, K-Pop is a universe of fashion, beauty, and fan culture.',
@@ -122,8 +139,9 @@ const articlesData: Omit<Article, 'id' | 'authorId'>[] = [
   }
 ];
 
-const eventsData: Omit<Event, 'id'>[] = [
+let eventsData: Event[] = [
   {
+    id: 'event-1',
     slug: 'louis-vuitton-x-pop-up',
     title: "Louis Vuitton 'X' Pop-Up Experience",
     description: "An immersive journey through 160 years of artistic collaborations and creative exchanges from the Maison's archives. Discover rare pieces and interactive installations.",
@@ -137,6 +155,7 @@ const eventsData: Omit<Event, 'id'>[] = [
     time: '11:00 AM - 7:00 PM Daily'
   },
   {
+    id: 'event-2',
     slug: 'saint-laurent-rive-droite-gallery',
     title: 'Saint Laurent Rive Droite Ephemeral Gallery',
     description: 'A temporary gallery curated by Anthony Vaccarello, featuring a selection of contemporary art, rare books, and vintage furniture that reflects the Saint Laurent universe.',
@@ -150,6 +169,7 @@ const eventsData: Omit<Event, 'id'>[] = [
     time: '10:00 AM - 6:00 PM'
   },
   {
+    id: 'event-3',
     slug: 'balenciaga-couture-show-screening',
     title: "Screening: Balenciaga's 52nd Couture Show",
     description: "An exclusive public screening of Demna's latest couture collection for Balenciaga. Experience the artistry and innovation of modern haute couture on the big screen.",
@@ -163,6 +183,7 @@ const eventsData: Omit<Event, 'id'>[] = [
     time: '7:30 PM'
   },
    {
+    id: 'event-4',
     slug: 'met-gala-retrospective',
     title: 'The Met Gala: A Fashion Retrospective',
     description: "Explore the most iconic looks from the Met Gala's history in this stunning retrospective. See up close the garments that defined a generation of red carpets.",
@@ -176,6 +197,7 @@ const eventsData: Omit<Event, 'id'>[] = [
     time: '10:00 AM - 5:00 PM'
   },
   {
+    id: 'event-5',
     slug: 'prada-mode-tokyo',
     title: 'Prada Mode Tokyo',
     description: "A traveling social club with a focus on contemporary culture, providing members a unique art experience along with music, dining, and conversation.",
@@ -189,6 +211,7 @@ const eventsData: Omit<Event, 'id'>[] = [
     time: '6:00 PM onwards'
   },
   {
+    id: 'event-6',
     slug: 'art-basel-miami-beach',
     title: 'Art Basel Miami Beach 2024',
     description: "The world's leading contemporary art fair returns to Miami Beach. Discover works from leading galleries and emerging artists from across the globe.",
@@ -208,185 +231,77 @@ const eventsData: Omit<Event, 'id'>[] = [
 
 // Author Functions
 export async function getAuthors(): Promise<Author[]> {
-  try {
-    const authorsCollection = collection(db, "authors");
-    const authorSnapshot = await getDocs(authorsCollection);
-    const authorsList = authorSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Author));
-    return authorsList;
-  } catch (error: any) {
-    console.error("Error fetching authors: ", error.message);
-    if(error.code === 'permission-denied') {
-        console.log("Firestore permission denied. Returning seed data for authors.");
-        return authorsData.map((author, index) => ({...author, id: `seed-author-${index}`}));
-    }
-    return [];
-  }
+  console.log("Returning static author data.");
+  return authorsData;
 }
 
 export async function getAuthor(id: string): Promise<Author | null> {
-    try {
-        if (id.startsWith('seed-author-')) {
-            const authorIndex = parseInt(id.split('-')[2], 10);
-            return { ...authorsData[authorIndex], id: id };
-        }
-        const authorDoc = await getDoc(doc(db, "authors", id));
-        if (!authorDoc.exists()) {
-            return null;
-        }
-        return { id: authorDoc.id, ...authorDoc.data() } as Author;
-    } catch (error) {
-        console.error("Error fetching author: ", error);
-        return null;
-    }
+    console.log(`Getting static author data for id: ${id}`);
+    const author = authorsData.find(a => a.id === id) || null;
+    return author;
 }
 
 // Article Functions
 export async function getArticles(category?: string): Promise<Article[]> {
-    try {
-        const articlesCollection = collection(db, "articles");
-        let q = query(articlesCollection);
-
-        if (category) {
-            q = query(articlesCollection, where("category", "==", category));
-        }
-
-        const articleSnapshot = await getDocs(q);
-        let articlesList = articleSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Article));
-        
-        return articlesList.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
-    } catch (error: any) {
-        console.error("Error fetching articles: ", error.message);
-        if (error.code === 'permission-denied') {
-            console.log("Firestore permission denied. Returning seed data for articles.");
-            const authors = await getAuthors();
-            const seededArticles = articlesData.map((article, index) => ({
-                ...article,
-                id: `seed-article-${index}`,
-                authorId: authors[index % authors.length]?.id || 'seed-author-0'
-            }));
-
-            if (category) {
-                return seededArticles.filter(a => a.category === category);
-            }
-            return seededArticles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
-        }
-        return [];
+    console.log(`Returning static article data. Category: ${category || 'all'}`);
+    let articles = articlesData;
+    if (category) {
+        articles = articlesData.filter(a => a.category === category);
     }
+    return articles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 }
 
 export async function getArticle(slug: string): Promise<Article | null> {
-    try {
-        const q = query(collection(db, "articles"), where("slug", "==", slug));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-             // Fallback to seed data if Firestore is empty or inaccessible
-            const authors = await getAuthors();
-            const seededArticle = articlesData
-                .map((article, index) => ({
-                    ...article,
-                    id: `seed-article-${index}`,
-                    authorId: authors[index % authors.length]?.id || 'seed-author-0'
-                }))
-                .find(a => a.slug === slug);
-            return seededArticle || null;
-        }
-        const articleDoc = querySnapshot.docs[0];
-        return { id: articleDoc.id, ...articleDoc.data() } as Article;
-    } catch (error) {
-        console.error("Error fetching article by slug: ", error);
-        // Fallback for permission errors
-        const authors = await getAuthors();
-        const seededArticle = articlesData
-            .map((article, index) => ({
-                ...article,
-                id: `seed-article-${index}`,
-                authorId: authors[index % authors.length]?.id || 'seed-author-0'
-            }))
-            .find(a => a.slug === slug);
-        return seededArticle || null;
-    }
+    console.log(`Getting static article data for slug: ${slug}`);
+    const article = articlesData.find(a => a.slug === slug) || null;
+    return article;
 }
 
 // Event Functions
 export async function getEvents(): Promise<Event[]> {
-  try {
-    const eventsCollection = collection(db, "events");
-    const eventSnapshot = await getDocs(eventsCollection);
-    const eventsList = eventSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Event));
-    
-    return eventsList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  } catch (error: any) {
-    console.error("Error fetching events: ", error.message);
-     if (error.code === 'permission-denied') {
-        console.log("Firestore permission denied. Returning seed data for events.");
-        return eventsData.map((event, index) => ({...event, id: `seed-event-${index}`}));
-     }
-    return [];
-  }
+  console.log("Returning static event data.");
+  return eventsData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
 }
 
 export async function getEvent(slug: string): Promise<Event | null> {
-    try {
-        const q = query(collection(db, "events"), where("slug", "==", slug));
-        const querySnapshot = await getDocs(q);
-        if (querySnapshot.empty) {
-            const seededEvent = eventsData.map((event, index) => ({...event, id: `seed-event-${index}`})).find(e => e.slug === slug);
-            return seededEvent || null;
-        }
-        const doc = querySnapshot.docs[0];
-        return { id: doc.id, ...doc.data() } as Event;
-    } catch (error) {
-        console.error("Error fetching event by slug: ", error);
-        const seededEvent = eventsData.map((event, index) => ({...event, id: `seed-event-${index}`})).find(e => e.slug === slug);
-        return seededEvent || null;
-    }
+    console.log(`Getting static event data for slug: ${slug}`);
+    const event = eventsData.find(e => e.slug === slug) || null;
+    return event;
 }
 
 export async function addRsvp(eventId: string, email: string): Promise<void> {
-  try {
-    const rsvpsCollection = collection(db, `events/${eventId}/rsvps`);
-    await addDoc(rsvpsCollection, { email, rsvpDate: new Date() });
-    console.log(`RSVP added for ${email} to event ${eventId}`);
-  } catch (error) {
-    console.error("Error adding RSVP: ", error);
-    throw new Error("Failed to add RSVP.");
-  }
+  console.log(`(Static) RSVP added for ${email} to event ${eventId}. This is not persisted.`);
+  // In a real scenario, this would interact with a database.
+  // For this temporary solution, we do nothing.
 }
 
 
 export async function createArticle(article: Omit<Article, 'id'>): Promise<Article> {
-    try {
-        const articlesCollection = collection(db, "articles");
-        const docRef = await addDoc(articlesCollection, article);
-        console.log("Created article with ID:", docRef.id);
-        return { ...article, id: docRef.id };
-    } catch (error) {
-        console.error("Error creating article:", error);
-        throw new Error("Failed to create article.");
-    }
+    const newId = `article-${Date.now()}`;
+    const newArticle: Article = { ...article, id: newId };
+    articlesData.unshift(newArticle);
+    console.log(`(Static) Created article with ID: ${newId}`);
+    return newArticle;
 }
 
 export async function updateArticle(id: string, articleUpdate: Partial<Omit<Article, 'id'>>): Promise<Article | null> {
-    try {
-        const articleRef = doc(db, "articles", id);
-        await updateDoc(articleRef, articleUpdate);
-        console.log("Updated article with ID:", id);
-        const updatedDoc = await getDoc(articleRef);
-        return { id: updatedDoc.id, ...updatedDoc.data() } as Article;
-    } catch (error) {
-        console.error("Error updating article:", error);
-        throw new Error("Failed to update article.");
+    const articleIndex = articlesData.findIndex(a => a.id === id);
+    if (articleIndex === -1) {
+        console.log(`(Static) Article with ID ${id} not found for update.`);
+        return null;
     }
+    articlesData[articleIndex] = { ...articlesData[articleIndex], ...articleUpdate };
+    console.log(`(Static) Updated article with ID: ${id}`);
+    return articlesData[articleIndex];
 }
 
 export async function deleteArticle(id: string): Promise<void> {
-    try {
-        const articleRef = doc(db, "articles", id);
-        await deleteDoc(articleRef);
-        console.log("Deleted article with ID:", id);
-    } catch (error) {
-        console.error("Error deleting article:", error);
-        throw new Error("Failed to delete article.");
+    const initialLength = articlesData.length;
+    articlesData = articlesData.filter(a => a.id !== id);
+    if (articlesData.length < initialLength) {
+        console.log(`(Static) Deleted article with ID: ${id}`);
+    } else {
+        console.log(`(Static) Article with ID ${id} not found for deletion.`);
     }
 }
 
@@ -396,19 +311,14 @@ export async function searchArticles(queryText: string): Promise<Article[]> {
   }
   const lowercasedQuery = queryText.toLowerCase();
   
-  try {
-    const allArticles = await getArticles();
-    const results = allArticles.filter(article =>
-      article.title.toLowerCase().includes(lowercasedQuery) ||
-      article.subtitle.toLowerCase().includes(lowercasedQuery) ||
-      article.content.toLowerCase().includes(lowercasedQuery) ||
-      article.tags.some(tag => tag.toLowerCase().includes(lowercasedQuery))
-    );
-    return results;
-  } catch (error) {
-      console.error("Error searching articles: ", error);
-      return [];
-  }
+  const results = articlesData.filter(article =>
+    article.title.toLowerCase().includes(lowercasedQuery) ||
+    article.subtitle.toLowerCase().includes(lowercasedQuery) ||
+    article.content.toLowerCase().includes(lowercasedQuery) ||
+    article.tags.some(tag => tag.toLowerCase().includes(lowercasedQuery))
+  );
+  console.log(`(Static) Found ${results.length} articles for query: "${queryText}"`);
+  return results;
 }
 
 
@@ -417,24 +327,15 @@ export function uploadImage(
   onProgress: (progress: number) => void
 ): Promise<string> {
   return new Promise((resolve, reject) => {
-    const storageRef = ref(storage, `article-covers/${Date.now()}_${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        onProgress(progress);
-      },
-      (error) => {
-        console.error("Image upload error:", error);
-        reject(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          resolve(downloadURL);
-        });
-      }
-    );
+    onProgress(20);
+    // This is a mock upload. It returns a picsum URL after a short delay.
+    setTimeout(() => {
+        onProgress(60);
+        setTimeout(() => {
+            onProgress(100);
+            const randomId = Math.floor(Math.random() * 1000);
+            resolve(`https://picsum.photos/seed/${randomId}/1200/800`);
+        }, 300);
+    }, 300);
   });
 }
