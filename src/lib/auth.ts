@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
+import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 async function getSession() {
@@ -16,13 +17,14 @@ async function login(email: string, password: string): Promise<void> {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const idToken = await userCredential.user.getIdToken();
     
-    // Set cookie to expire in 1 day
     cookies().set("firebase-session", idToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       path: "/",
       maxAge: 60 * 60 * 24, 
     });
+
+    revalidatePath('/', 'layout');
     
   } catch (error: any) {
     console.error("Login failed:", error.message);
@@ -34,6 +36,7 @@ async function logout(): Promise<void> {
   try {
     await signOut(auth);
     cookies().delete("firebase-session");
+    revalidatePath('/', 'layout');
   } catch (error) {
     console.error("Logout failed:", error);
     throw new Error("Logout failed.");

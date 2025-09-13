@@ -32,7 +32,7 @@ export default function LoginPage() {
         title: "Login Successful",
         description: "Redirecting to dashboard...",
       });
-      router.push("/admin");
+      router.refresh();
     } catch (error) {
       console.error(error);
       toast({
@@ -42,7 +42,6 @@ export default function LoginPage() {
           (error as Error).message ||
           "Incorrect email or password. Please try again.",
       });
-    } finally {
       setIsLoading(false);
     }
   };
