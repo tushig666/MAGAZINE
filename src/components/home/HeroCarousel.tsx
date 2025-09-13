@@ -21,7 +21,7 @@ interface HeroCarouselProps {
 
 export function HeroCarousel({ articles }: HeroCarouselProps) {
   const plugin = React.useRef(
-    Autoplay({ delay: 2000, stopOnInteraction: true })
+    Autoplay({ delay: 5000, stopOnInteraction: true })
   );
 
   return (
@@ -37,7 +37,7 @@ export function HeroCarousel({ articles }: HeroCarouselProps) {
       <CarouselContent>
         {articles.map((article) => (
           <CarouselItem key={article.id}>
-            <div className="relative w-full h-[60vh] md:h-[80vh]">
+            <div className="relative w-full h-[70vh] md:h-[90vh]">
               <Image
                 src={article.coverImage}
                 alt={article.title}
@@ -46,19 +46,19 @@ export function HeroCarousel({ articles }: HeroCarouselProps) {
                 className="object-cover"
                 data-ai-hint={article.imageHint}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
-              <div className="absolute inset-0 flex flex-col items-center justify-end text-center text-white p-8 md:p-12">
-                <div className="max-w-4xl">
-                  <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-2">
+              <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/30 to-transparent" />
+              <div className="absolute inset-0 flex flex-col items-start justify-end text-white p-8 md:p-16">
+                <div className="max-w-2xl text-left">
+                  <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-4">
                     Featured Story
                   </p>
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-headline font-bold leading-tight">
                     {article.title}
                   </h1>
-                  <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto text-white/90">
+                  <p className="mt-6 text-lg md:text-xl max-w-xl text-white/90">
                     {article.subtitle}
                   </p>
-                  <Button asChild className="mt-8" size="lg">
+                  <Button asChild className="mt-8" size="lg" variant="outline">
                     <Link href={`/articles/${article.slug}`}>Read More</Link>
                   </Button>
                 </div>

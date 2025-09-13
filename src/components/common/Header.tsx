@@ -61,31 +61,32 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+      <div className="container mx-auto flex h-20 items-center justify-between px-4">
         <div className="flex items-center gap-6">
           <Link href="/" className="text-2xl font-headline tracking-tight" style={{fontFamily: "'Libre Baskerville', serif"}}>
             BITCHESGONEMAAD
           </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+        </div>
+
+        <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
             {navLinks.map(({ href, label }) => (
               <Link
                 key={label}
                 href={href}
                 className={cn(
-                    "transition-colors hover:text-primary",
-                    pathname === href ? "text-primary" : "text-foreground/60"
+                    "transition-colors hover:text-primary tracking-wider",
+                    pathname === href ? "text-primary" : "text-foreground/70"
                 )}
               >
-                {label}
+                {label.toUpperCase()}
               </Link>
             ))}
           </nav>
-        </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2">
             <Dialog open={isSearchOpen} onOpenChange={setIsSearchOpen}>
             <DialogTrigger asChild>
-              <Button variant="ghost" size="icon" className="hidden md:inline-flex">
+              <Button variant="ghost" size="icon">
                 <Search className="h-5 w-5" />
                 <span className="sr-only">Search</span>
               </Button>

@@ -42,7 +42,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
         setSummary(article.subtitle.slice(0, 100) + '...');
         const wordsPerMinute = 200;
         const wordCount = article.content.split(/\s+/).length;
-        setReadTime(Math.ceil(wordCount / wordsPerMinute));
+        setReadTime(Math.ceil(wordCount / wordCount));
 
       } catch (error) {
         console.error("Failed to fetch AI data:", error);
@@ -58,9 +58,9 @@ export function ArticleCard({ article }: ArticleCardProps) {
 
   return (
     <Link href={`/articles/${article.slug}`} className="group">
-      <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+      <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-0 bg-transparent shadow-none rounded-none">
         <CardHeader className="p-0">
-          <div className="relative aspect-[4/3] w-full">
+          <div className="relative aspect-[3/4] w-full">
             <Image
               src={article.coverImage}
               alt={article.title}
@@ -71,9 +71,9 @@ export function ArticleCard({ article }: ArticleCardProps) {
             />
           </div>
         </CardHeader>
-        <CardContent className="p-6 flex-1 flex flex-col">
-          <Badge variant="outline" className="mb-2 w-fit">{article.category}</Badge>
-          <CardTitle className="font-headline text-xl leading-snug group-hover:text-primary transition-colors">
+        <CardContent className="p-4 flex-1 flex flex-col">
+          <Badge variant="outline" className="mb-2 w-fit rounded-sm">{article.category}</Badge>
+          <CardTitle className="font-headline text-2xl leading-snug group-hover:text-primary transition-colors">
             {article.title}
           </CardTitle>
           <div className="mt-3 text-sm text-muted-foreground flex-1">
@@ -87,7 +87,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
             )}
           </div>
         </CardContent>
-        <CardFooter className="p-6 pt-0 text-xs text-muted-foreground flex items-center justify-between">
+        <CardFooter className="p-4 pt-0 text-xs text-muted-foreground flex items-center justify-between">
            <div className="flex items-center gap-2">
             <BookOpen className="w-4 h-4" />
             {isLoading || readTime === null ? (
