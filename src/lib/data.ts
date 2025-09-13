@@ -257,3 +257,17 @@ export async function deleteArticle(id: string): Promise<void> {
     }
     return Promise.resolve();
 }
+
+export async function searchArticles(query: string): Promise<Article[]> {
+  if (!query) {
+    return [];
+  }
+  const lowercasedQuery = query.toLowerCase();
+  const results = articles.filter(article =>
+    article.title.toLowerCase().includes(lowercasedQuery) ||
+    article.subtitle.toLowerCase().includes(lowercasedQuery) ||
+    article.content.toLowerCase().includes(lowercasedQuery) ||
+    article.tags.some(tag => tag.toLowerCase().includes(lowercasedQuery))
+  );
+  return Promise.resolve(results);
+}
