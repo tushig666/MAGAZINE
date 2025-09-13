@@ -27,7 +27,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { createArticle, updateArticle, uploadImage } from "@/lib/data";
-import { X, Upload } from "lucide-react";
+import { X, Upload, Trash2 } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
 import { Progress } from "@/components/ui/progress";
@@ -84,6 +84,7 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
 
   const handleImageUpload = async (file: File) => {
     if (!file) return;
+    setUploadProgress(0);
     try {
       const downloadURL = await uploadImage(file, setUploadProgress);
       form.setValue("coverImage", downloadURL);
@@ -98,6 +99,11 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
       setUploadProgress(null);
     }
   };
+
+  const removeImage = () => {
+    setPreviewImage(null);
+    form.setValue("coverImage", "");
+  }
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const articleData = {
@@ -177,38 +183,50 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
                     <FormLabel>Cover Image</FormLabel>
                     <FormControl>
                         <div>
-                            <Input
-                                id="cover-image-upload"
-                                type="file"
-                                className="hidden"
-                                accept="image/png, image/jpeg, image/gif, image/webp"
-                                onChange={(e) => {
-                                    if (e.target.files && e.target.files[0]) {
-                                        handleImageUpload(e.target.files[0]);
-                                    }
-                                }}
-                            />
-                            <label
-                                htmlFor="cover-image-upload"
-                                className="group cursor-pointer"
-                            >
-                                <div className="aspect-video w-full rounded-md border-2 border-dashed border-input flex flex-col items-center justify-center text-muted-foreground group-hover:border-primary group-hover:text-primary transition-colors">
-                                    {previewImage ? (
-                                        <Image
-                                            src={previewImage}
-                                            alt="Cover preview"
-                                            width={400}
-                                            height={225}
-                                            className="w-full h-full object-cover rounded-md"
-                                        />
-                                    ) : (
-                                        <>
-                                            <Upload className="h-8 w-8 mb-2" />
-                                            <span>Click or drag to upload image</span>
-                                        </>
-                                    )}
+                          {previewImage ? (
+                             <div className="relative group aspect-video w-full">
+                                <Image
+                                    src={previewImage}
+                                    alt="Cover preview"
+                                    fill
+                                    className="object-cover rounded-md"
+                                />
+                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                    <Button
+                                        type="button"
+                                        variant="destructive"
+                                        size="icon"
+                                        onClick={removeImage}
+                                    >
+                                        <Trash2 className="h-5 w-5" />
+                                        <span className="sr-only">Remove image</span>
+                                    </Button>
                                 </div>
-                            </label>
+                            </div>
+                          ) : (
+                            <>
+                              <Input
+                                  id="cover-image-upload"
+                                  type="file"
+                                  className="hidden"
+                                  accept="image/png, image/jpeg, image/gif, image/webp"
+                                  onChange={(e) => {
+                                      if (e.target.files && e.target.files[0]) {
+                                          handleImageUpload(e.target.files[0]);
+                                      }
+                                  }}
+                              />
+                              <label
+                                  htmlFor="cover-image-upload"
+                                  className="group cursor-pointer"
+                              >
+                                  <div className="aspect-video w-full rounded-md border-2 border-dashed border-input flex flex-col items-center justify-center text-muted-foreground group-hover:border-primary group-hover:text-primary transition-colors">
+                                      <Upload className="h-8 w-8 mb-2" />
+                                      <span>Click or drag to upload image</span>
+                                  </div>
+                              </label>
+                            </>
+                          )}
                         </div>
                     </FormControl>
                     {uploadProgress !== null && (
