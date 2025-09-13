@@ -8,8 +8,6 @@ import {
 } from "firebase/auth";
 import { cookies } from "next/headers";
 
-const ADMIN_EMAIL = "admin@bitchesgonemaad.com";
-
 async function getSession() {
   return cookies().get("firebase-session")?.value;
 }
@@ -20,31 +18,13 @@ async function login(email: string, password: string): Promise<void> {
     const idToken = await userCredential.user.getIdToken();
     cookies().set("firebase-session", idToken, {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       path: "/",
       maxAge: 60 * 60 * 24, // 1 day
     });
   } catch (error: any) {
-    // Check if the error is that the user does not exist
-    if (error.code === 'auth/user-not-found' && email === ADMIN_EMAIL) {
-      console.log('Admin user not found. Creating a new admin user...');
-      try {
-        const newUserCredential = await createUserWithEmailAndPassword(auth, email, password);
-        const idToken = await newUserCredential.user.getIdToken();
-         cookies().set("firebase-session", idToken, {
-            httpOnly: true,
-            secure: true,
-            path: "/",
-            maxAge: 60 * 60 * 24, // 1 day
-        });
-      } catch (creationError) {
-        console.error("Error creating new admin user:", creationError);
-        throw creationError;
-      }
-    } else {
-      console.error("Login failed:", error);
-      throw error;
-    }
+    console.error("Login failed:", error);
+    throw error;
   }
 }
 
