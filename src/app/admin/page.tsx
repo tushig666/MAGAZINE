@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import { LogoutButton } from "./logout-button";
+import Link from "next/link";
 
 export default function AdminPage() {
   return (
@@ -26,7 +27,9 @@ export default function AdminPage() {
           Admin Dashboard
         </h1>
         <div className="flex items-center gap-4">
-          <Button>New Article</Button>
+          <Button asChild>
+            <Link href="/admin/new">New Article</Link>
+          </Button>
           <LogoutButton />
         </div>
       </header>
@@ -64,7 +67,9 @@ export default function AdminPage() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem>Edit</DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link href={`/admin/articles/${article.slug}/edit`} className="w-full text-left">Edit</Link>
+                      </DropdownMenuItem>
                       <DropdownMenuItem>Archive</DropdownMenuItem>
                       <DropdownMenuItem className="text-destructive">
                         Delete
