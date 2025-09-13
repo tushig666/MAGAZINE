@@ -2,69 +2,69 @@
   "placeholderImages": [
     {
       "id": "author1",
-      "description": "Portrait of author Elena Petrov",
+      "description": "Portrait of author Julien Renault",
       "imageUrl": "https://picsum.photos/seed/author1/100/100",
-      "imageHint": "woman portrait"
-    },
-    {
-      "id": "author2",
-      "description": "Portrait of author Kenji Tanaka",
-      "imageUrl": "https://picsum.photos/seed/author2/100/100",
       "imageHint": "man portrait"
     },
     {
+      "id": "author2",
+      "description": "Portrait of author Lexi Chen",
+      "imageUrl": "https://picsum.photos/seed/author2/100/100",
+      "imageHint": "woman portrait"
+    },
+    {
       "id": "author3",
-      "description": "Portrait of author Aisha Williams",
+      "description": "Portrait of author Simone Jackson",
       "imageUrl": "https://picsum.photos/seed/author3/100/100",
       "imageHint": "woman smiling"
     },
     {
       "id": "article1",
-      "description": "Cover image for 'The Renaissance of Haute Couture'",
+      "description": "Cover image for 'A$AP Rocky & Kanye West: The New Fashion Royalty'",
       "imageUrl": "https://picsum.photos/seed/article1/1200/800",
-      "imageHint": "fashion design"
+      "imageHint": "street style"
     },
     {
       "id": "article2",
-      "description": "Cover image for 'Tokyo Street Style: A Visual Diary'",
+      "description": "Cover image for 'Dior: The Enduring Power of the New Look'",
       "imageUrl": "https://picsum.photos/seed/article2/1200/800",
-      "imageHint": "tokyo street"
+      "imageHint": "haute couture"
     },
     {
       "id": "article3",
-      "description": "Cover image for 'The Art of the Unseen: Sound Installations'",
+      "description": "Cover image for 'The Age of the Supermodel: Beyond the Runway'",
       "imageUrl": "https://picsum.photos/seed/article3/1200/800",
-      "imageHint": "art gallery"
+      "imageHint": "fashion model"
     },
     {
       "id": "article4",
-      "description": "Cover image for 'Sustainable Fashion: Beyond the Buzzword'",
+      "description": "Cover image for 'Balenciaga: From Couture to Street Culture'",
       "imageUrl": "https://picsum.photos/seed/article4/1200/800",
-      "imageHint": "sustainable fabric"
+      "imageHint": "runway fashion"
     },
     {
       "id": "article5",
-      "description": "Cover image for 'An Interview with a Visionary Artist'",
+      "description": "Cover image for 'An Interview With Hedi Slimane'",
       "imageUrl": "https://picsum.photos/seed/article5/1200/800",
-      "imageHint": "artist studio"
+      "imageHint": "fashion designer"
     },
     {
       "id": "event1",
-      "description": "Image for 'Vernissage: Future Landscapes'",
+      "description": "Image for 'Louis Vuitton 'X' Pop-Up Experience'",
       "imageUrl": "https://picsum.photos/seed/event1/1200/800",
-      "imageHint": "abstract art"
+      "imageHint": "luxury retail"
     },
     {
       "id": "event2",
-      "description": "Image for 'Runway Show: Atelier X'",
+      "description": "Image for 'Saint Laurent Rive Droite Ephemeral Gallery'",
       "imageUrl": "https://picsum.photos/seed/event2/1200/800",
-      "imageHint": "fashion runway"
+      "imageHint": "art gallery"
     },
     {
       "id": "event3",
-      "description": "Image for 'Artist Talk: Kenji Tanaka'",
+      "description": "Image for 'Screening: Balenciaga's 52nd Couture Show'",
       "imageUrl": "https://picsum.photos/seed/event3/1200/800",
-      "imageHint": "lecture hall"
+      "imageHint": "movie theater"
     }
   ]
 }
