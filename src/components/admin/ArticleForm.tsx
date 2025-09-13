@@ -38,7 +38,7 @@ const formSchema = z.object({
   slug: z.string().min(3, { message: "Slug must be at least 3 characters long." }),
   authorId: z.string({ required_error: "Please select an author." }),
   category: z.string().min(1, { message: "Category is required." }),
-  coverImage: z.string().url({ message: "Please enter a valid URL." }).or(z.any()),
+  coverImage: z.string().url({ message: "A cover image is required." }).or(z.literal("")),
   imageHint: z.string().max(20, { message: "Hint cannot be more than 20 characters." }).optional(),
   content: z.string().min(50, { message: "Content must be at least 50 characters long." }),
   tags: z.array(z.object({ value: z.string().min(1) })),
@@ -89,14 +89,19 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
       const downloadURL = await uploadImage(file, setUploadProgress);
       form.setValue("coverImage", downloadURL);
       setPreviewImage(downloadURL);
-      setUploadProgress(null);
+      toast({
+        title: "Image Uploaded",
+        description: "Your image has been successfully uploaded.",
+      });
     } catch (error) {
+      console.error(error)
       toast({
         variant: "destructive",
         title: "Image upload failed",
         description: "Could not upload the image. Please try again.",
       });
-      setUploadProgress(null);
+    } finally {
+        setUploadProgress(null);
     }
   };
 
@@ -109,8 +114,21 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
     const articleData = {
       ...values,
       tags: values.tags.map(t => t.value),
-      coverImage: previewImage || values.coverImage,
     };
+
+    if (!articleData.coverImage && previewImage) {
+        articleData.coverImage = previewImage;
+    }
+
+    if (!articleData.coverImage) {
+         toast({
+            variant: "destructive",
+            title: "Cover image is missing",
+            description: "Please upload a cover image for the article.",
+        });
+        return;
+    }
+
     try {
       if (article) {
         await updateArticle(article.id, articleData);
@@ -175,66 +193,69 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
             </FormItem>
           )}
         />
-        <FormField
-            control={form.control}
-            name="coverImage"
-            render={({ field }) => (
-                <FormItem>
-                    <FormLabel>Cover Image</FormLabel>
-                    <FormControl>
-                        <div>
-                          {previewImage ? (
-                             <div className="relative group aspect-video w-full">
-                                <Image
-                                    src={previewImage}
-                                    alt="Cover preview"
-                                    fill
-                                    className="object-cover rounded-md"
-                                />
-                                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                                    <Button
-                                        type="button"
-                                        variant="destructive"
-                                        size="icon"
-                                        onClick={removeImage}
-                                    >
-                                        <Trash2 className="h-5 w-5" />
-                                        <span className="sr-only">Remove image</span>
-                                    </Button>
-                                </div>
-                            </div>
-                          ) : (
-                            <>
-                              <Input
-                                  id="cover-image-upload"
-                                  type="file"
-                                  className="hidden"
-                                  accept="image/png, image/jpeg, image/gif, image/webp"
-                                  onChange={(e) => {
-                                      if (e.target.files && e.target.files[0]) {
-                                          handleImageUpload(e.target.files[0]);
-                                      }
-                                  }}
-                              />
-                              <label
-                                  htmlFor="cover-image-upload"
-                                  className="group cursor-pointer"
-                              >
-                                  <div className="aspect-video w-full rounded-md border-2 border-dashed border-input flex flex-col items-center justify-center text-muted-foreground group-hover:border-primary group-hover:text-primary transition-colors">
-                                      <Upload className="h-8 w-8 mb-2" />
-                                      <span>Click or drag to upload image</span>
-                                  </div>
-                              </label>
-                            </>
-                          )}
+       <FormField
+          control={form.control}
+          name="coverImage"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Cover Image</FormLabel>
+              <FormControl>
+                <div>
+                  {previewImage ? (
+                    <div className="relative group aspect-video w-full">
+                      <Image
+                        src={previewImage}
+                        alt="Cover preview"
+                        fill
+                        className="object-cover rounded-md"
+                      />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <Button
+                          type="button"
+                          variant="destructive"
+                          size="icon"
+                          onClick={removeImage}
+                        >
+                          <Trash2 className="h-5 w-5" />
+                          <span className="sr-only">Remove image</span>
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      <Input
+                        id="cover-image-upload"
+                        type="file"
+                        className="hidden"
+                        accept="image/png, image/jpeg, image/gif, image/webp"
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files[0]) {
+                            handleImageUpload(e.target.files[0]);
+                          }
+                        }}
+                      />
+                      <label
+                        htmlFor="cover-image-upload"
+                        className="group cursor-pointer"
+                      >
+                        <div className="aspect-video w-full rounded-md border-2 border-dashed border-input flex flex-col items-center justify-center text-muted-foreground group-hover:border-primary group-hover:text-primary transition-colors">
+                          <Upload className="h-8 w-8 mb-2" />
+                          <span>Click or drag to upload image</span>
                         </div>
-                    </FormControl>
-                    {uploadProgress !== null && (
-                        <Progress value={uploadProgress} className="mt-2" />
-                    )}
-                    <FormMessage />
-                </FormItem>
-            )}
+                      </label>
+                    </>
+                  )}
+                </div>
+              </FormControl>
+              {uploadProgress !== null && (
+                <div className="flex items-center gap-2 mt-2">
+                    <Progress value={uploadProgress} className="w-full" />
+                    <span className="text-sm text-muted-foreground">{Math.round(uploadProgress)}%</span>
+                </div>
+              )}
+              <FormMessage />
+            </FormItem>
+          )}
         />
          <FormField
           control={form.control}
