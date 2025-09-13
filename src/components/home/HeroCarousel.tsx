@@ -27,7 +27,7 @@ export function HeroCarousel({ articles }: HeroCarouselProps) {
   return (
     <Carousel
       plugins={[plugin.current]}
-      className="w-full"
+      className="w-full group"
       onMouseEnter={plugin.current.stop}
       onMouseLeave={plugin.current.reset}
       opts={{
@@ -67,10 +67,8 @@ export function HeroCarousel({ articles }: HeroCarouselProps) {
           </CarouselItem>
         ))}
       </CarouselContent>
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-4">
-        <CarouselPrevious className="static translate-y-0 text-white bg-white/10 hover:bg-white/20 border-white/20" />
-        <CarouselNext className="static translate-y-0 text-white bg-white/10 hover:bg-white/20 border-white/20" />
-      </div>
+      <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 h-10 w-10 text-white bg-white/10 hover:bg-white/20 border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 h-10 w-10 text-white bg-white/10 hover:bg-white/20 border-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
     </Carousel>
   );
 }
