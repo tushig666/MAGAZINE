@@ -21,50 +21,50 @@
     {
       "id": "article1",
       "description": "Cover image for 'A$AP Rocky & Kanye West: The New Fashion Royalty'",
-      "imageUrl": "https://picsum.photos/seed/fashion-royalty/1200/800",
-      "imageHint": "street fashion"
+      "imageUrl": "https://picsum.photos/seed/asap-kanye/1200/800",
+      "imageHint": "men fashion"
     },
     {
       "id": "article2",
       "description": "Cover image for 'Dior: The Enduring Power of the New Look'",
-      "imageUrl": "https://picsum.photos/seed/dior-look/1200/800",
-      "imageHint": "haute couture"
+      "imageUrl": "https://picsum.photos/seed/dior-power/1200/800",
+      "imageHint": "elegant dress"
     },
     {
       "id": "article3",
       "description": "Cover image for 'The Age of the Supermodel: Beyond the Runway'",
-      "imageUrl": "https://picsum.photos/seed/supermodel/1200/800",
-      "imageHint": "fashion model"
+      "imageUrl": "https://picsum.photos/seed/supermodels-runway/1200/800",
+      "imageHint": "models posing"
     },
     {
       "id": "article4",
       "description": "Cover image for 'Balenciaga: From Couture to Street Culture'",
-      "imageUrl": "https://picsum.photos/seed/balenciaga-street/1200/800",
-      "imageHint": "runway fashion"
+      "imageUrl": "https://picsum.photos/seed/balenciaga-demna/1200/800",
+      "imageHint": "edgy fashion"
     },
     {
       "id": "article5",
       "description": "Cover image for 'An Interview With Hedi Slimane'",
-      "imageUrl": "https://picsum.photos/seed/hedi-slimane/1200/800",
-      "imageHint": "fashion designer"
+      "imageUrl": "https://picsum.photos/seed/hedi-interview/1200/800",
+      "imageHint": "man thinking"
     },
     {
       "id": "event1",
       "description": "Image for 'Louis Vuitton 'X' Pop-Up Experience'",
-      "imageUrl": "https://picsum.photos/seed/louis-vuitton-popup/1200/800",
-      "imageHint": "luxury store"
+      "imageUrl": "https://picsum.photos/seed/lv-experience/1200/800",
+      "imageHint": "luxury fashion"
     },
     {
       "id": "event2",
       "description": "Image for 'Saint Laurent Rive Droite Ephemeral Gallery'",
-      "imageUrl": "https://picsum.photos/seed/saint-laurent-gallery/1200/800",
-      "imageHint": "art gallery"
+      "imageUrl": "https://picsum.photos/seed/sl-gallery/1200/800",
+      "imageHint": "minimalist gallery"
     },
     {
       "id": "event3",
       "description": "Image for 'Screening: Balenciaga's 52nd Couture Show'",
-      "imageUrl": "https://picsum.photos/seed/balenciaga-screening/1200/800",
-      "imageHint": "movie screen"
+      "imageUrl": "https://picsum.photos/seed/balenciaga-show/1200/800",
+      "imageHint": "fashion show"
     }
   ]
 }
