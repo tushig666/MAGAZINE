@@ -39,6 +39,7 @@ const formSchema = z.object({
   authorId: z.string({ required_error: "Please select an author." }),
   category: z.string().min(1, { message: "Category is required." }),
   coverImage: z.string().url({ message: "A cover image is required." }).or(z.literal("")),
+  imageHint: z.string().optional(),
   content: z.string().min(50, { message: "Content must be at least 50 characters long." }),
   tags: z.array(z.object({ value: z.string().min(1) })),
   publishDate: z.string(),
@@ -67,6 +68,7 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
       authorId: article?.authorId || "",
       category: article?.category || "Fashion",
       coverImage: article?.coverImage || "",
+      imageHint: article?.imageHint || "",
       content: article?.content || "",
       tags: article?.tags.map(t => ({ value: t })) || [{ value: "" }],
       publishDate: article?.publishDate || new Date().toISOString(),
@@ -386,7 +388,7 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
              />
         </div>
         <Button type="submit" disabled={form.formState.isSubmitting || uploadProgress !== null}>
-            {form.formState.isSubmitting ? "Saving..." : (article ? "Save Changes" : "Create Article")}
+          {uploadProgress !== null ? 'Uploading...' : form.formState.isSubmitting ? "Saving..." : (article ? "Save Changes" : "Create Article")}
         </Button>
       </form>
     </Form>
