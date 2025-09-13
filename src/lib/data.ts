@@ -194,6 +194,34 @@ const events: Event[] = [
     },
     date: '2024-10-01T10:00:00Z',
     time: '10:00 AM - 5:00 PM'
+  },
+  {
+    id: '5',
+    slug: 'prada-mode-tokyo',
+    title: 'Prada Mode Tokyo',
+    description: "A traveling social club with a focus on contemporary culture, providing members a unique art experience along with music, dining, and conversation.",
+    image: 'https://picsum.photos/seed/prada-tokyo/1200/800',
+    imageHint: 'modern architecture',
+    location: {
+      name: 'Shibuya Stream Hall',
+      address: '3-21-3 Shibuya, Shibuya City, Tokyo, Japan'
+    },
+    date: '2024-11-12T18:00:00Z',
+    time: '6:00 PM onwards'
+  },
+  {
+    id: '6',
+    slug: 'art-basel-miami-beach',
+    title: 'Art Basel Miami Beach 2024',
+    description: "The world's leading contemporary art fair returns to Miami Beach. Discover works from leading galleries and emerging artists from across the globe.",
+    image: 'https://picsum.photos/seed/art-basel/1200/800',
+    imageHint: 'art gallery',
+    location: {
+      name: 'Miami Beach Convention Center',
+      address: '1901 Convention Center Dr, Miami Beach, FL 33139'
+    },
+    date: '2024-12-06T11:00:00Z',
+    time: '11:00 AM - 6:00 PM'
   }
 ];
 
