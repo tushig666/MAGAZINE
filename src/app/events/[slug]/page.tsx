@@ -76,7 +76,7 @@ export default async function EventPage({ params }: { params: { slug: string } }
                 <p className="text-sm text-muted-foreground">{event.location.address}</p>
               </div>
             </div>
-            <RsvpModal />
+            <RsvpModal eventId={event.id} />
           </div>
         </div>
       </div>

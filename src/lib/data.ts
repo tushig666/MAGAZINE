@@ -1,7 +1,10 @@
 // This is a temporary data store.
 // It will be replaced with Firebase Firestore.
-
+import { db } from '@/lib/firebase';
+import { collection, getDocs, getDoc, doc, addDoc, updateDoc, deleteDoc, query, where } from "firebase/firestore";
 import type { Author, Article, Event } from "@/lib/types";
+
+// --- Seed Data (for initial setup) ---
 
 const authors: Author[] = [
   {
@@ -221,16 +224,57 @@ export async function getArticle(slug: string): Promise<Article | null> {
     return Promise.resolve(article || null);
 }
 
-
 // Event Functions
 export async function getEvents(): Promise<Event[]> {
-    return Promise.resolve(events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()));
+  try {
+    const eventsCollection = collection(db, "events");
+    const eventSnapshot = await getDocs(eventsCollection);
+    const eventsList = eventSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Event));
+    
+    // If the collection is empty, seed it with the mock data
+    if (eventsList.length === 0) {
+      for (const event of events) {
+        // We don't pass the ID, so Firestore generates one
+        const { id, ...eventData } = event;
+        await addDoc(eventsCollection, eventData);
+      }
+      // Re-fetch after seeding
+      return getEvents();
+    }
+    
+    return eventsList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  } catch (error) {
+    console.error("Error fetching events: ", error);
+    return [];
+  }
 }
 
 export async function getEvent(slug: string): Promise<Event | null> {
-    const event = events.find(e => e.slug === slug);
-    return Promise.resolve(event || null);
+    try {
+        const q = query(collection(db, "events"), where("slug", "==", slug));
+        const querySnapshot = await getDocs(q);
+        if (querySnapshot.empty) {
+            return null;
+        }
+        const doc = querySnapshot.docs[0];
+        return { id: doc.id, ...doc.data() } as Event;
+    } catch (error) {
+        console.error("Error fetching event by slug: ", error);
+        return null;
+    }
 }
+
+export async function addRsvp(eventId: string, email: string): Promise<void> {
+  try {
+    const rsvpsCollection = collection(db, `events/${eventId}/rsvps`);
+    await addDoc(rsvpsCollection, { email, rsvpDate: new Date() });
+    console.log(`RSVP added for ${email} to event ${eventId}`);
+  } catch (error) {
+    console.error("Error adding RSVP: ", error);
+    throw new Error("Failed to add RSVP.");
+  }
+}
+
 
 export async function createArticle(article: Omit<Article, 'id'>): Promise<Article> {
     const newId = (articles.length + 1).toString();

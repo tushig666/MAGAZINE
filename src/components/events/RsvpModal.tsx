@@ -25,14 +25,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
+import { addRsvp } from "@/lib/data";
 
 const formSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email address." }),
 });
 
-export function RsvpModal() {
+interface RsvpModalProps {
+    eventId: string;
+}
+
+export function RsvpModal({ eventId }: RsvpModalProps) {
   const { toast } = useToast();
   const [open, setOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,17 +47,26 @@ export function RsvpModal() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // In a real app, you'd save this to Firestore.
-    console.log("RSVP received:", values);
-    
-    setOpen(false);
-    form.reset();
-
-    toast({
-      title: "RSVP Confirmed!",
-      description: "Thank you for your interest. We've saved your spot.",
-    });
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true);
+    try {
+      await addRsvp(eventId, values.email);
+      setOpen(false);
+      form.reset();
+      toast({
+        title: "RSVP Confirmed!",
+        description: "Thank you for your interest. We've saved your spot.",
+      });
+    } catch (error) {
+      console.error("RSVP submission error:", error);
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request. Please try again.",
+      });
+    } finally {
+        setIsSubmitting(false);
+    }
   }
 
   return (
@@ -75,7 +90,7 @@ export function RsvpModal() {
                 <FormItem>
                   <FormLabel>Email Address</FormLabel>
                   <FormControl>
-                    <Input placeholder="you@example.com" {...field} />
+                    <Input placeholder="you@example.com" {...field} disabled={isSubmitting} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -83,11 +98,13 @@ export function RsvpModal() {
             />
             <DialogFooter>
               <DialogClose asChild>
-                <Button type="button" variant="secondary">
+                <Button type="button" variant="secondary" disabled={isSubmitting}>
                   Cancel
                 </Button>
               </DialogClose>
-              <Button type="submit">Confirm RSVP</Button>
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? "Confirming..." : "Confirm RSVP"}
+                </Button>
             </DialogFooter>
           </form>
         </Form>
