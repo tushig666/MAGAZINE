@@ -122,9 +122,8 @@ const articlesData: Omit<Article, 'id' | 'authorId'>[] = [
   }
 ];
 
-const eventsData: Event[] = [
+const eventsData: Omit<Event, 'id'>[] = [
   {
-    id: '1',
     slug: 'louis-vuitton-x-pop-up',
     title: "Louis Vuitton 'X' Pop-Up Experience",
     description: "An immersive journey through 160 years of artistic collaborations and creative exchanges from the Maison's archives. Discover rare pieces and interactive installations.",
@@ -138,7 +137,6 @@ const eventsData: Event[] = [
     time: '11:00 AM - 7:00 PM Daily'
   },
   {
-    id: '2',
     slug: 'saint-laurent-rive-droite-gallery',
     title: 'Saint Laurent Rive Droite Ephemeral Gallery',
     description: 'A temporary gallery curated by Anthony Vaccarello, featuring a selection of contemporary art, rare books, and vintage furniture that reflects the Saint Laurent universe.',
@@ -152,7 +150,6 @@ const eventsData: Event[] = [
     time: '10:00 AM - 6:00 PM'
   },
   {
-    id: '3',
     slug: 'balenciaga-couture-show-screening',
     title: "Screening: Balenciaga's 52nd Couture Show",
     description: "An exclusive public screening of Demna's latest couture collection for Balenciaga. Experience the artistry and innovation of modern haute couture on the big screen.",
@@ -166,7 +163,6 @@ const eventsData: Event[] = [
     time: '7:30 PM'
   },
    {
-    id: '4',
     slug: 'met-gala-retrospective',
     title: 'The Met Gala: A Fashion Retrospective',
     description: "Explore the most iconic looks from the Met Gala's history in this stunning retrospective. See up close the garments that defined a generation of red carpets.",
@@ -180,7 +176,6 @@ const eventsData: Event[] = [
     time: '10:00 AM - 5:00 PM'
   },
   {
-    id: '5',
     slug: 'prada-mode-tokyo',
     title: 'Prada Mode Tokyo',
     description: "A traveling social club with a focus on contemporary culture, providing members a unique art experience along with music, dining, and conversation.",
@@ -194,7 +189,6 @@ const eventsData: Event[] = [
     time: '6:00 PM onwards'
   },
   {
-    id: '6',
     slug: 'art-basel-miami-beach',
     title: 'Art Basel Miami Beach 2024',
     description: "The world's leading contemporary art fair returns to Miami Beach. Discover works from leading galleries and emerging artists from across the globe.",
@@ -228,14 +222,22 @@ export async function getAuthors(): Promise<Author[]> {
     }
     
     return authorsList;
-  } catch (error) {
-    console.error("Error fetching authors: ", error);
+  } catch (error: any) {
+    console.error("Error fetching authors: ", error.message);
+    if(error.code === 'permission-denied') {
+        console.log("Firestore permission denied. Returning seed data for authors.");
+        return authorsData.map((author, index) => ({...author, id: `seed-author-${index}`}));
+    }
     return [];
   }
 }
 
 export async function getAuthor(id: string): Promise<Author | null> {
     try {
+        if (id.startsWith('seed-author-')) {
+            const authorIndex = parseInt(id.split('-')[2], 10);
+            return { ...authorsData[authorIndex], id: id };
+        }
         const authorDoc = await getDoc(doc(db, "authors", id));
         if (!authorDoc.exists()) {
             return null;
@@ -260,7 +262,6 @@ export async function getArticles(category?: string): Promise<Article[]> {
         const articleSnapshot = await getDocs(q);
         let articlesList = articleSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Article));
 
-        // Seed data if the collection is empty
         if (articlesList.length === 0 && !category) {
             console.log('Seeding articles...');
             const authors = await getAuthors();
@@ -274,8 +275,22 @@ export async function getArticles(category?: string): Promise<Article[]> {
         }
         
         return articlesList.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
-    } catch (error) {
-        console.error("Error fetching articles: ", error);
+    } catch (error: any) {
+        console.error("Error fetching articles: ", error.message);
+        if (error.code === 'permission-denied') {
+            console.log("Firestore permission denied. Returning seed data for articles.");
+            const authors = await getAuthors();
+            const seededArticles = articlesData.map((article, index) => ({
+                ...article,
+                id: `seed-article-${index}`,
+                authorId: authors[index % authors.length]?.id || 'seed-author-0'
+            }));
+
+            if (category) {
+                return seededArticles.filter(a => a.category === category);
+            }
+            return seededArticles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+        }
         return [];
     }
 }
@@ -285,13 +300,31 @@ export async function getArticle(slug: string): Promise<Article | null> {
         const q = query(collection(db, "articles"), where("slug", "==", slug));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            return null;
+             // Fallback to seed data if Firestore is empty or inaccessible
+            const authors = await getAuthors();
+            const seededArticle = articlesData
+                .map((article, index) => ({
+                    ...article,
+                    id: `seed-article-${index}`,
+                    authorId: authors[index % authors.length]?.id || 'seed-author-0'
+                }))
+                .find(a => a.slug === slug);
+            return seededArticle || null;
         }
         const articleDoc = querySnapshot.docs[0];
         return { id: articleDoc.id, ...articleDoc.data() } as Article;
     } catch (error) {
         console.error("Error fetching article by slug: ", error);
-        return null;
+        // Fallback for permission errors
+        const authors = await getAuthors();
+        const seededArticle = articlesData
+            .map((article, index) => ({
+                ...article,
+                id: `seed-article-${index}`,
+                authorId: authors[index % authors.length]?.id || 'seed-author-0'
+            }))
+            .find(a => a.slug === slug);
+        return seededArticle || null;
     }
 }
 
@@ -305,15 +338,18 @@ export async function getEvents(): Promise<Event[]> {
     if (eventsList.length === 0) {
       console.log('Seeding events...');
       for (const event of eventsData) {
-        const { id, ...eventData } = event;
-        await addDoc(eventsCollection, eventData);
+        await addDoc(eventsCollection, event);
       }
       return getEvents();
     }
     
     return eventsList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  } catch (error) {
-    console.error("Error fetching events: ", error);
+  } catch (error: any) {
+    console.error("Error fetching events: ", error.message);
+     if (error.code === 'permission-denied') {
+        console.log("Firestore permission denied. Returning seed data for events.");
+        return eventsData.map((event, index) => ({...event, id: `seed-event-${index}`}));
+     }
     return [];
   }
 }
@@ -323,13 +359,15 @@ export async function getEvent(slug: string): Promise<Event | null> {
         const q = query(collection(db, "events"), where("slug", "==", slug));
         const querySnapshot = await getDocs(q);
         if (querySnapshot.empty) {
-            return null;
+            const seededEvent = eventsData.map((event, index) => ({...event, id: `seed-event-${index}`})).find(e => e.slug === slug);
+            return seededEvent || null;
         }
         const doc = querySnapshot.docs[0];
         return { id: doc.id, ...doc.data() } as Event;
     } catch (error) {
         console.error("Error fetching event by slug: ", error);
-        return null;
+        const seededEvent = eventsData.map((event, index) => ({...event, id: `seed-event-${index}`})).find(e => e.slug === slug);
+        return seededEvent || null;
     }
 }
 
@@ -387,7 +425,6 @@ export async function searchArticles(queryText: string): Promise<Article[]> {
   }
   const lowercasedQuery = queryText.toLowerCase();
   
-  // This is a client-side search. For large datasets, a dedicated search service like Algolia or Elasticsearch is recommended.
   try {
     const allArticles = await getArticles();
     const results = allArticles.filter(article =>
