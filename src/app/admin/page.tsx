@@ -16,7 +16,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
-import { LogoutButton } from "./logout-button";
 import Link from "next/link";
 
 export default async function AdminPage() {
@@ -31,7 +30,6 @@ export default async function AdminPage() {
           <Button asChild>
             <Link href="/admin/new">New Article</Link>
           </Button>
-          <LogoutButton />
         </div>
       </header>
 
