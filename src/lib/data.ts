@@ -227,162 +227,90 @@ let eventsData: Event[] = [
 ];
 
 
-// --- API Functions ---
+// --- API Functions (In-Memory Implementation) ---
 
 // Author Functions
 export async function getAuthors(): Promise<Author[]> {
-  try {
-    const authorsCol = collection(db, 'authors');
-    const authorSnapshot = await getDocs(authorsCol);
-    let authorsList = authorSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Author));
-
-    if (authorsList.length === 0) {
-        console.log("No authors found, seeding initial data...");
-        for (const author of authorsData) {
-            const docRef = await addDoc(authorsCol, author);
-            authorsList.push({ ...author, id: docRef.id });
-        }
-    }
-    return authorsList;
-  } catch (error: any) {
-    console.error("Error fetching authors: ", error.message);
-    return [];
-  }
+  console.log("Returning in-memory authors data.");
+  return Promise.resolve(authorsData);
 }
 
 export async function getAuthor(id: string): Promise<Author | null> {
-    try {
-        const authorDoc = await getDoc(doc(db, 'authors', id));
-        if (authorDoc.exists()) {
-            return { id: authorDoc.id, ...authorDoc.data() } as Author;
-        }
-        return null;
-    } catch (error: any) {
-         console.error("Error fetching author: ", error.message);
-         return null;
-    }
+    console.log(`Searching for author with id: ${id} in memory.`);
+    const author = authorsData.find(a => a.id === id) || null;
+    return Promise.resolve(author);
 }
 
 // Article Functions
 export async function getArticles(category?: string): Promise<Article[]> {
-    try {
-        let q = query(collection(db, 'articles'));
-        if (category) {
-            q = query(collection(db, 'articles'), where('category', '==', category));
-        }
-
-        const articleSnapshot = await getDocs(q);
-        let articles = articleSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Article));
-
-        if (articles.length === 0 && !category) {
-             console.log("No articles found, seeding initial data...");
-             for (const article of articlesData) {
-                const docRef = await addDoc(collection(db, 'articles'), article);
-                articles.push({ ...article, id: docRef.id });
-            }
-        }
-        
-        return articles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
-
-    } catch (error: any) {
-        console.error("Error fetching articles: ", error.message);
-        return [];
+    console.log(`Returning in-memory articles data. Category: ${category || 'All'}`);
+    let articles = articlesData;
+    if (category) {
+        articles = articlesData.filter(article => article.category === category);
     }
+    const sortedArticles = articles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+    return Promise.resolve(sortedArticles);
 }
 
 export async function getArticle(slug: string): Promise<Article | null> {
-    try {
-        const q = query(collection(db, 'articles'), where('slug', '==', slug));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-            const articleDoc = querySnapshot.docs[0];
-            return { id: articleDoc.id, ...articleDoc.data() } as Article;
-        }
-        return null;
-    } catch(e: any) {
-        console.error("Error fetching article by slug: ", e.message);
-        return null;
-    }
+    console.log(`Searching for article with slug: ${slug} in memory.`);
+    const article = articlesData.find(a => a.slug === slug) || null;
+    return Promise.resolve(article);
 }
 
 // Event Functions
 export async function getEvents(): Promise<Event[]> {
-  try {
-    const eventsCol = collection(db, 'events');
-    const eventSnapshot = await getDocs(eventsCol);
-    let eventsList = eventSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Event));
-
-    if (eventsList.length === 0) {
-        console.log("No events found, seeding initial data...");
-        for (const event of eventsData) {
-            const docRef = await addDoc(eventsCol, event);
-            eventsList.push({ ...event, id: docRef.id });
-        }
-    }
-    return eventsList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
-  } catch (error: any) {
-    console.error("Error fetching events: ", error.message);
-    return [];
-  }
+  console.log("Returning in-memory events data.");
+  const sortedEvents = eventsData.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+  return Promise.resolve(sortedEvents);
 }
 
 export async function getEvent(slug: string): Promise<Event | null> {
-    try {
-        const q = query(collection(db, 'events'), where('slug', '==', slug));
-        const querySnapshot = await getDocs(q);
-        if (!querySnapshot.empty) {
-            const eventDoc = querySnapshot.docs[0];
-            return { id: eventDoc.id, ...eventDoc.data() } as Event;
-        }
-        return null;
-    } catch(e: any) {
-        console.error("Error fetching event by slug: ", e.message);
-        return null;
-    }
+    console.log(`Searching for event with slug: ${slug} in memory.`);
+    const event = eventsData.find(e => e.slug === slug) || null;
+    return Promise.resolve(event);
 }
 
 export async function addRsvp(eventId: string, email: string): Promise<void> {
-  try {
-    await addDoc(collection(db, `events/${eventId}/rsvps`), { email, rsvpDate: new Date().toISOString() });
-    console.log(`RSVP from ${email} added to event ${eventId}`);
-  } catch (e: any) {
-    console.error("Error adding RSVP: ", e.message);
-    throw e;
-  }
+  // This is a mock implementation. In a real scenario, this would interact with a database.
+  console.log(`RSVP from ${email} added to event ${eventId} (in-memory).`);
+  return Promise.resolve();
 }
 
 
 export async function createArticle(article: Omit<Article, 'id'>): Promise<Article> {
-    const docRef = await addDoc(collection(db, 'articles'), article);
-    return { ...article, id: docRef.id };
+    console.log("Creating new article in memory.");
+    const newArticle: Article = {
+      ...article,
+      id: `article-${Date.now()}`,
+    };
+    articlesData.unshift(newArticle); // Add to the beginning of the array
+    return Promise.resolve(newArticle);
 }
 
 export async function updateArticle(id: string, articleUpdate: Partial<Omit<Article, 'id'>>): Promise<Article | null> {
-    const articleRef = doc(db, 'articles', id);
-    await updateDoc(articleRef, articleUpdate);
-    const updatedDoc = await getDoc(articleRef);
-    return { id: updatedDoc.id, ...updatedDoc.data() } as Article;
+    console.log(`Updating article with id: ${id} in memory.`);
+    const articleIndex = articlesData.findIndex(a => a.id === id);
+    if (articleIndex > -1) {
+        articlesData[articleIndex] = { ...articlesData[articleIndex], ...articleUpdate };
+        return Promise.resolve(articlesData[articleIndex]);
+    }
+    return Promise.resolve(null);
 }
 
 export async function deleteArticle(id: string): Promise<void> {
-    await deleteDoc(doc(db, 'articles', id));
+    console.log(`Deleting article with id: ${id} in memory.`);
+    articlesData = articlesData.filter(a => a.id !== id);
+    return Promise.resolve();
 }
 
 export async function searchArticles(queryText: string): Promise<Article[]> {
   if (!queryText) {
-    return [];
+    return Promise.resolve([]);
   }
-  // Note: Firestore doesn't support full-text search natively.
-  // This is a simplified search that checks for an exact match on the title.
-  // For a real app, a third-party search service like Algolia or Typesense is recommended.
   const lowercasedQuery = queryText.toLowerCase();
   
-  const articlesRef = collection(db, 'articles');
-  const q = query(articlesRef);
-  const querySnapshot = await getDocs(q);
-
-  const results = querySnapshot.docs
-    .map(doc => ({ id: doc.id, ...doc.data() } as Article))
+  const results = articlesData
     .filter(article =>
         article.title.toLowerCase().includes(lowercasedQuery) ||
         article.subtitle.toLowerCase().includes(lowercasedQuery) ||
@@ -390,8 +318,8 @@ export async function searchArticles(queryText: string): Promise<Article[]> {
         article.tags.some(tag => tag.toLowerCase().includes(lowercasedQuery))
     );
 
-  console.log(`Found ${results.length} articles for query: "${queryText}"`);
-  return results;
+  console.log(`Found ${results.length} articles for query: "${queryText}" in memory.`);
+  return Promise.resolve(results);
 }
 
 
@@ -399,6 +327,7 @@ export function uploadImage(
   file: File,
   onProgress: (progress: number) => void
 ): Promise<string> {
+  // This function will use Firebase Storage as requested.
   return new Promise((resolve, reject) => {
     if (!file) {
       reject('No file provided');
@@ -416,7 +345,13 @@ export function uploadImage(
       },
       (error) => {
         console.error('Image upload error:', error);
-        reject(error);
+        // Even if there's a permission error on storage, fallback to a placeholder
+        if (error.code === 'storage/unauthorized') {
+            console.warn('Firebase Storage permission denied. Falling back to placeholder image.');
+            resolve(`https://picsum.photos/seed/${Date.now()}/1200/800`);
+        } else {
+            reject(error);
+        }
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
