@@ -67,8 +67,8 @@ export default function AdminPage() {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem>
-                        <Link href={`/admin/articles/${article.slug}/edit`} className="w-full text-left">Edit</Link>
+                      <DropdownMenuItem asChild>
+                        <Link href={`/admin/articles/${article.slug}/edit`}>Edit</Link>
                       </DropdownMenuItem>
                       <DropdownMenuItem>Archive</DropdownMenuItem>
                       <DropdownMenuItem className="text-destructive">
