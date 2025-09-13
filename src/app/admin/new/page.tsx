@@ -38,6 +38,13 @@ export default async function NewArticlePage() {
           </label>
           <Input id="subtitle" placeholder="Catchy Subtitle" />
         </div>
+        
+        <div>
+          <label htmlFor="coverImage" className="block text-sm font-medium mb-2">
+            Cover Image URL
+          </label>
+          <Input id="coverImage" placeholder="https://example.com/image.jpg" />
+        </div>
 
         <div>
           <label htmlFor="content" className="block text-sm font-medium mb-2">
