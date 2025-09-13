@@ -19,7 +19,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-center md:text-left">
             <Link href="/" className="text-2xl font-bold font-headline tracking-tight">
-              VogueX
+              BITCHESGONEMAAD
             </Link>
             <p className="mt-2 text-sm text-muted-foreground">
               The modern voice in fashion, art, and culture.
@@ -52,7 +52,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-8 border-t pt-8 text-center text-sm text-muted-foreground">
-          &copy; {new Date().getFullYear()} VogueX. All Rights Reserved.
+          &copy; {new Date().getFullYear()} BITCHESGONEMAAD. All Rights Reserved.
         </div>
       </div>
     </footer>

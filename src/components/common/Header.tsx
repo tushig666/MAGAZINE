@@ -25,7 +25,7 @@ export function Header() {
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-6">
           <Link href="/" className="text-2xl font-headline tracking-tight" style={{fontFamily: "'Libre Baskerville', serif"}}>
-            VogueX
+            BITCHESGONEMAAD
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
             {navLinks.map(({ href, label }) => (
@@ -59,7 +59,7 @@ export function Header() {
             <SheetContent side="left">
               <div className="flex flex-col gap-6 p-6">
                 <Link href="/" className="mb-4 text-2xl font-headline tracking-tight" onClick={() => setSheetOpen(false)} style={{fontFamily: "'Libre Baskerville', serif"}}>
-                  VogueX
+                  BITCHESGONEMAAD
                 </Link>
                 <nav className="flex flex-col gap-4">
                   {navLinks.map(({ href, label }) => (

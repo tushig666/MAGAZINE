@@ -109,12 +109,12 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
                   </Link>
                 </Button>
                 <Button variant="outline" size="icon" asChild>
-                   <Link href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://voguex.com/articles/' + article.slug)}`} target="_blank">
+                   <Link href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://bitchesgonemaad.com/articles/' + article.slug)}`} target="_blank">
                     <FacebookIcon />
                   </Link>
                 </Button>
                  <Button variant="outline" size="icon" asChild>
-                   <Link href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent('https://voguex.com/articles/' + article.slug)}`} target="_blank">
+                   <Link href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent('https://bitchesgonemaad.com/articles/' + article.slug)}`} target="_blank">
                     <Linkedin className="h-4 w-4" />
                   </Link>
                 </Button>

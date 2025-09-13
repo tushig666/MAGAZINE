@@ -6,8 +6,8 @@ import { Footer } from "@/components/common/Footer";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
-  title: "VogueX - Fashion, Art, Culture",
-  description: "VogueX is a visual magazine focused on fashion, art, and culture.",
+  title: "BITCHESGONEMAAD - Fashion, Art, Culture",
+  description: "BITCHESGONEMAAD is a visual magazine focused on fashion, art, and culture.",
 };
 
 export default function RootLayout({
