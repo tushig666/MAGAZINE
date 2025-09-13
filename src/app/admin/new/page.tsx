@@ -8,10 +8,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { authors } from "@/lib/data";
+import { getAuthors } from "@/lib/data";
 import Link from "next/link";
 
-export default function NewArticlePage() {
+export default async function NewArticlePage() {
+    const authors = await getAuthors();
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
       <header className="flex justify-between items-center mb-12">

@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { articles, authors } from "@/lib/data";
+import { getArticle, getAuthor, getArticles } from "@/lib/data";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import ArticleContent from "@/components/articles/ArticleContent";
@@ -9,6 +9,7 @@ import { Twitter, Linkedin, Copy } from "lucide-react";
 import Link from "next/link";
 
 export async function generateStaticParams() {
+  const articles = await getArticles();
   return articles.map((article) => ({
     slug: article.slug,
   }));
@@ -19,14 +20,14 @@ const FacebookIcon = () => (
 );
 
 
-export default function ArticlePage({ params }: { params: { slug: string } }) {
-  const article = articles.find((a) => a.slug === params.slug);
+export default async function ArticlePage({ params }: { params: { slug: string } }) {
+  const article = await getArticle(params.slug);
 
   if (!article) {
     notFound();
   }
 
-  const author = authors.find((a) => a.id === article.authorId);
+  const author = await getAuthor(article.authorId);
 
   const publishDate = new Date(article.publishDate).toLocaleDateString("en-US", {
     year: "numeric",

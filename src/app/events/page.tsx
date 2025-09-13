@@ -1,7 +1,8 @@
-import { events } from "@/lib/data";
+import { getEvents } from "@/lib/data";
 import { EventCard } from "@/components/events/EventCard";
 
-export default function EventsPage() {
+export default async function EventsPage() {
+  const events = await getEvents();
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
       <header className="text-center mb-12">

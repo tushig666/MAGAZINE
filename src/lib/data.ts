@@ -1,222 +1,259 @@
+// This is a temporary data store.
+// It will be replaced with Firebase Firestore.
+
 import type { Author, Article, Event } from "@/lib/types";
 
-export const authors: Author[] = [
+const authors: Author[] = [
   {
-    id: "author-1",
-    name: "Julien Renault",
-    avatarUrl: "https://picsum.photos/seed/author1/100/100",
-    imageHint: "man portrait",
-    bio: "Julien is a leading fashion critic, with a sharp eye for runway trends and the interplay between streetwear and high couture.",
+    id: '1',
+    name: 'Julien Renault',
+    avatarUrl: 'https://picsum.photos/seed/author1/100/100',
+    imageHint: 'man portrait',
+    bio: 'Julien is a Paris-based fashion journalist and critic, known for his sharp analysis of couture and ready-to-wear. He has contributed to major fashion publications for over a decade.'
   },
   {
-    id: "author-2",
-    name: "Lexi Chen",
-    avatarUrl: "https://picsum.photos/seed/author2/100/100",
-    imageHint: "woman portrait",
-    bio: "Lexi is a photographer known for her candid backstage shots at Fashion Week and her portraits of industry icons.",
+    id: '2',
+    name: 'Lexi Chen',
+    avatarUrl: 'https://picsum.photos/seed/author2/100/100',
+    imageHint: 'woman portrait',
+    bio: 'Lexi is a culture writer and photographer based in New York. Her work explores the intersection of street style, music, and art, capturing the zeitgeist of modern youth culture.'
   },
-  {
-    id: "author-3",
-    name: "Simone Jackson",
-    avatarUrl: "https://picsum.photos/seed/author3/100/100",
-    imageHint: "woman smiling",
-    bio: "Simone covers the business of fashion, from brand strategies at LVMH to the rise of independent designers.",
-  },
+   {
+    id: '3',
+    name: 'Simone Jackson',
+    avatarUrl: 'https://picsum.photos/seed/author3/100/100',
+    imageHint: 'woman smiling',
+    bio: 'Simone is an art historian and curator specializing in contemporary digital art. She is a vocal advocate for new media artists and the integration of technology in creative expression.'
+  }
 ];
 
-export const articles: Article[] = [
-  {
-    id: "article-1",
-    slug: "asap-rocky-and-kanye-west-the-new-fashion-royalty",
-    title: "A$AP Rocky & Kanye West: The New Fashion Royalty",
-    subtitle: "How two musicians tore down the walls of high fashion and rewrote the rules of style for a generation.",
-    authorId: "author-1",
-    coverImage: "https://picsum.photos/seed/dapper-rapper/1200/800",
-    imageHint: "men fashion",
-    content: "For decades, the arbiters of style were confined to Parisian ateliers and legacy fashion houses. Then came Kanye West and A$AP Rocky. These artists didn't just wear luxury brands; they infiltrated them, reimagined them, and ultimately became creative forces in their own right. From Kanye's disruptive Yeezy empire to Rocky's effortless fusion of Dior and streetwear, they have become the new kings of a more democratic, digitally-native fashion landscape. This article traces their ascent, analyzing their impact on brands like Louis Vuitton and Balenciaga, and their role in defining what 'cool' means today. They broke the old rules, proving that influence is no longer dictated from the top down but cultivated from the streets up. Their legacy is not just in the clothes they've worn or designed, but in the doors they've opened for a new generation of multi-hyphenate creatives.",
-    tags: ["Kanye West", "ASAP Rocky", "Streetwear", "Culture"],
-    category: "Culture",
-    publishDate: "2024-05-15T10:00:00Z",
+const articles: Article[] = [
+    {
+    id: '1',
+    slug: 'asap-rocky-kanye-west-new-fashion-royalty',
+    title: 'A$AP Rocky & Kanye West: The New Fashion Royalty',
+    subtitle: 'How two hip-hop icons reshaped the landscape of modern fashion.',
+    authorId: '1',
+    coverImage: 'https://picsum.photos/seed/asap-kanye/1200/800',
+    imageHint: 'men fashion',
+    content: "The worlds of hip-hop and high fashion have been intertwined for decades, but no two artists have blurred the lines quite like A$AP Rocky and Kanye West. From their early adoptions of avant-garde designers to launching their own billion-dollar brands, they've not only followed trends but have become the trendsetters themselves. This article delves into their style evolution, their impact on major fashion houses, and how they've redefined what it means to be a fashion icon in the 21st century. We'll explore key moments, from Kanye's game-changing Yeezy line to A$AP's collaborations with Dior and other luxury brands, analyzing their influence on streetwear and haute couture alike.",
+    tags: ['Hip-Hop', 'Kanye West', 'A$AP Rocky', 'Streetwear', 'High Fashion'],
+    category: 'Fashion',
+    publishDate: '2024-07-20T10:00:00Z',
     featured: true,
     editorsPick: false,
   },
   {
-    id: "article-2",
-    slug: "dior-the-enduring-power-of-the-new-look",
-    title: "Dior: The Enduring Power of the New Look",
-    subtitle: "From 1947 to today, how Christian Dior's revolutionary silhouette continues to shape modern fashion.",
-    authorId: "author-3",
-    coverImage: "https://picsum.photos/seed/vintage-dior/1200/800",
-    imageHint: "elegant dress",
-    content: "In the post-war austerity of 1947, Christian Dior unveiled a collection that would change fashion forever. Dubbed the 'New Look,' its cinched waists and full, voluminous skirts were a radical statement of optimism and femininity. Today, the spirit of the New Look lives on. Creative directors from John Galliano to Maria Grazia Chiuri have reinterpreted its core tenets for a contemporary audience. We explore the evolution of Dior's iconic silhouette, its influence on designers like Yves Saint Laurent, and its lasting cultural impact. The New Look was more than a collection; it was a philosophy that restored a sense of fantasy and elegance to fashion. This visual essay examines key moments, from the original Bar jacket to modern reinterpretations, celebrating a legacy that proves true vision is timeless.",
-    tags: ["Dior", "Haute Couture", "Fashion History"],
-    category: "Fashion",
-    publishDate: "2024-05-14T12:00:00Z",
+    id: '2',
+    slug: 'dior-enduring-power-of-the-new-look',
+    title: 'Dior: The Enduring Power of the New Look',
+    subtitle: "Over 75 years later, Christian Dior's revolutionary silhouette continues to inspire.",
+    authorId: '1',
+    coverImage: 'https://picsum.photos/seed/dior-power/1200/800',
+    imageHint: 'elegant dress',
+    content: "In the post-war austerity of 1947, Christian Dior unveiled a collection that would forever change the course of fashion. Dubbed the 'New Look,' its voluminous skirts, cinched waists, and soft shoulders were a radical departure from the utilitarian styles of the time. This piece explores the historical context of the New Look, its immediate and lasting impact, and how successive creative directors at the house of Dior—from Yves Saint Laurent to Maria Grazia Chiuri—have reinterpreted its core principles for a new generation. We examine the 'Bar' jacket and its countless iterations, a testament to the timelessness of a single, revolutionary idea.",
+    tags: ['Dior', 'Christian Dior', 'New Look', 'Fashion History', 'Couture'],
+    category: 'Fashion',
+    publishDate: '2024-07-18T14:30:00Z',
     featured: true,
     editorsPick: true,
   },
   {
-    id: "article-3",
-    slug: "the-age-of-the-supermodel-beyond-the-runway",
-    title: "The Age of the Supermodel: Beyond the Runway",
-    subtitle: "How today's high fashion models are leveraging their platforms to become powerful cultural figures.",
-    authorId: "author-2",
-    coverImage: "https://picsum.photos/seed/models-posing/1200/800",
-    imageHint: "models posing",
-    content: "There was a time when models were simply beautiful canvases for a designer's vision. Today, they are brands in their own right. Figures like Bella Hadid, Kendall Jenner, and Adut Akech are not just faces; they are powerful entrepreneurs, activists, and media moguls with global influence that extends far beyond the catwalk. This piece explores the new paradigm of the supermodel in the digital age. We examine how social media has given them a direct line to their audience, allowing them to shape conversations around body positivity, sustainability, and social justice. Through exclusive interviews and analysis, we uncover how these models are navigating the pressures of the industry while building multi-faceted careers that redefine what it means to be a model today. They are the new power players, using their visibility to not just sell clothes, but to inspire change.",
-    tags: ["Models", "Culture", "Social Media"],
-    category: "Fashion",
-    publishDate: "2024-05-12T09:00:00Z",
-    featured: false,
-    editorsPick: true,
-  },
-  {
-    id: "article-4",
-    slug: "balenciaga-from-couture-to-street-culture",
-    title: "Balenciaga: From Couture to Street Culture",
-    subtitle: "Demna Gvasalia's radical transformation of a storied fashion house into a streetwear phenomenon.",
-    authorId: "author-1",
-    coverImage: "https://picsum.photos/seed/street-style/1200/800",
-    imageHint: "edgy fashion",
-    content: "When Demna Gvasalia took the helm of Balenciaga, he didn't just update its archives; he blew them up. The designer, known for his work with the disruptive collective Vetements, has masterfully merged the architectural legacy of Cristóbal Balenciaga with the raw energy of contemporary street culture. The result is a brand that is both reverent and irreverent, producing oversized hoodies and couture gowns with equal conviction. This article analyzes Demna's genius, from the viral Triple S sneaker that redefined luxury footwear to his meme-worthy runway shows that challenge the very notion of a fashion presentation. He has made Balenciaga the ultimate purveyor of the zeitgeist, capturing the irony and absurdity of modern life in his designs. It's a controversial, often polarizing vision, but one that has made Balenciaga one of the most talked-about brands in the world.",
-    tags: ["Balenciaga", "Streetwear", "Demna Gvasalia"],
-    category: "Fashion",
-    publishDate: "2024-05-11T15:00:00Z",
-    featured: false,
-    editorsPick: false,
-  },
-  {
-    id: "article-5",
-    slug: "an-interview-with-a-visionary-designer",
-    title: "An Interview With Hedi Slimane",
-    subtitle: "Inside the mind of the controversial designer behind Celine, Saint Laurent, and Dior Homme.",
-    authorId: "author-1",
-    coverImage: "https://picsum.photos/seed/designer-portrait/1200/800",
-    imageHint: "man thinking",
-    content: "Hedi Slimane is more than a designer; he's a cultural architect. His razor-sharp tailoring and rock-and-roll aesthetic defined the early 2000s at Dior Homme, and his subsequent reinventions of Saint Laurent and Celine have been met with both critical acclaim and furious debate. In a rare and candid conversation, Slimane discusses his singular vision, his obsession with music subcultures, and his uncompromising approach to creativity. He speaks on the importance of photography in his process, his relationship with the artists who inspire him, and why he has consistently ignored the critics. This interview provides a glimpse into the mind of one of fashion's most private and influential figures, a man who has repeatedly proven that the most powerful statement is a clear, unwavering point of view.",
-    tags: ["Hedi Slimane", "Saint Laurent", "Celine", "Interview"],
-    category: "Fashion",
-    publishDate: "2024-05-10T11:00:00Z",
+    id: '3',
+    slug: 'age-of-the-supermodel-beyond-the-runway',
+    title: 'The Age of the Supermodel: Beyond the Runway',
+    subtitle: 'From runway stars to cultural icons and business moguls.',
+    authorId: '2',
+    coverImage: 'https://picsum.photos/seed/supermodels-runway/1200/800',
+    imageHint: 'models posing',
+    content: "The term 'supermodel' was coined in the 90s to describe a new breed of models who transcended the runway to become global celebrities. Naomi, Cindy, Linda, and Christy were more than just faces; they were personalities, brands, and forces of nature. This article traces the rise of the supermodel phenomenon, its cultural impact, and how the role has evolved in the age of social media. We look at the original supers and the new generation—like Kendall Jenner and Gigi Hadid—exploring how they leverage their platforms for activism, entrepreneurship, and shaping cultural conversations, proving that their influence extends far beyond the clothes they wear.",
+    tags: ['Supermodels', '90s Fashion', 'Naomi Campbell', 'Kendall Jenner', 'Culture'],
+    category: 'Culture',
+    publishDate: '2024-07-15T11:00:00Z',
     featured: true,
+    editorsPick: false,
+  },
+  {
+    id: '4',
+    slug: 'balenciaga-from-couture-to-street-culture',
+    title: 'Balenciaga: From Couture to Street Culture',
+    subtitle: "Under Demna's vision, a storied couture house became the king of streetwear.",
+    authorId: '1',
+    coverImage: 'https://picsum.photos/seed/balenciaga-demna/1200/800',
+    imageHint: 'edgy fashion',
+    content: "Founded by the master of shape and form, Cristóbal Balenciaga, the house of Balenciaga has a rich history in haute couture. Yet, in recent years, it has become synonymous with a completely different aesthetic: ironic, oversized, and deeply embedded in street and internet culture. This transformation was masterminded by creative director Demna. We investigate this seismic shift, analyzing how Demna has deconstructed and recontextualized luxury for the modern era. From the Triple S sneaker to collaborations with The Simpsons, we explore the strategies that made Balenciaga one of the most talked-about and influential brands in the world.",
+    tags: ['Balenciaga', 'Demna', 'Streetwear', 'Luxury', 'Fashion'],
+    category: 'Fashion',
+    publishDate: '2024-07-12T09:00:00Z',
+    featured: false,
     editorsPick: true,
   },
   {
-    id: "article-6",
-    slug: "the-artist-as-alchemist-anselm-kiefer-at-the-grand-palais",
-    title: "The Artist as Alchemist: Anselm Kiefer at the Grand Palais",
-    subtitle: "Exploring the monumental new installation by the German artist, a meditation on history, memory, and myth.",
-    authorId: "author-2",
-    coverImage: "https://picsum.photos/seed/art-installation/1200/800",
-    imageHint: "abstract painting",
-    content: "Anselm Kiefer's latest exhibition transforms the Grand Palais into a haunting landscape of ruin and rebirth. Towering sculptures of lead and concrete stand alongside immense canvases layered with ash, straw, and dried flowers. The work is a powerful, alchemical exploration of post-war European history, mythology, and the cyclical nature of destruction and creation. This review delves into the key pieces of the exhibition, unpacking the complex symbolism and historical references that define Kiefer's practice. It's an immersive, challenging experience that solidifies his status as one of the most important artists of our time.",
-    tags: ["Anselm Kiefer", "Contemporary Art", "Sculpture", "Exhibition"],
-    category: "Art",
-    publishDate: "2024-05-20T14:00:00Z",
+    id: '5',
+    slug: 'interview-with-hedi-slimane',
+    title: 'An Interview With Hedi Slimane',
+    subtitle: 'The enigmatic designer on his vision for Celine, photography, and the power of youth.',
+    authorId: '1',
+    coverImage: 'https://picsum.photos/seed/hedi-interview/1200/800',
+    imageHint: 'man thinking',
+    content: "Hedi Slimane is one of fashion's most influential, and controversial, figures. His razor-sharp tailoring and rock-and-roll aesthetic redefined menswear at Dior Homme in the 2000s and created commercial tidal waves at Saint Laurent. Now at Celine, he continues to project his singular, unwavering vision. In a rare and candid interview, Slimane discusses his creative process, his passion for photography, and the role of music and youth culture as the constant engine of his work. He shares his thoughts on the state of the fashion industry and why he remains committed to a vision of aspirational, timeless style.",
+    tags: ['Hedi Slimane', 'Celine', 'Dior Homme', 'Fashion Design', 'Interview'],
+    category: 'Fashion',
+    publishDate: '2024-07-10T16:00:00Z',
     featured: false,
     editorsPick: false,
   },
   {
-    id: "article-7",
-    slug: "street-art-sotheby's-the-new-avant-garde",
-    title: "From Street to Sotheby's: The New Avant-Garde",
-    subtitle: "How graffiti artists like Banksy and KAWS crashed the fine art market and became blue-chip investments.",
-    authorId: "author-3",
-    coverImage: "https://picsum.photos/seed/graffiti-art/1200/800",
-    imageHint: "colorful graffiti",
-    content: "Once dismissed as vandalism, street art has become one of the most dynamic and lucrative sectors of the contemporary art market. Artists who once operated in the shadows, like Banksy, KAWS, and Jean-Michel Basquiat, now command multi-million dollar prices at auction houses like Sotheby's and Christie's. This article traces the meteoric rise of street art, from the subways of New York to the galleries of Mayfair. We speak to collectors, gallerists, and the artists themselves about this cultural shift, exploring the tensions between street credibility and commercial success. Is the institutional embrace of street art a validation of its power or a betrayal of its rebellious roots?",
-    tags: ["Street Art", "Banksy", "KAWS", "Art Market"],
-    category: "Art",
-    publishDate: "2024-05-18T11:00:00Z",
+    id: '6',
+    slug: 'art-in-the-age-of-instagram',
+    title: 'Art in the Age of Instagram',
+    subtitle: 'How social media has changed the way we create, consume, and value art.',
+    authorId: '3',
+    coverImage: 'https://picsum.photos/seed/art-instagram/1200/800',
+    imageHint: 'phone art gallery',
+    content: "Instagram has become a virtual gallery, a marketplace, and a performance stage for the art world. Artists can now bypass traditional gatekeepers, connecting directly with a global audience. But what is the cost? This article explores the multifaceted impact of social media on art. We examine how algorithms influence aesthetic trends, the rise of the 'Instagrammable' exhibition, and the debate over digital versus physical experiences. Featuring interviews with artists, gallerists, and critics, we ask whether social media is democratizing the art world or simply creating a new set of rules and pressures.",
+    tags: ['Art', 'Social Media', 'Instagram', 'Digital Art', 'Contemporary Art'],
+    category: 'Art',
+    publishDate: '2024-07-08T12:00:00Z',
     featured: false,
     editorsPick: true,
   },
   {
-    id: "article-8",
-    slug: "the-met-gala-a-cultural-phenomenon",
-    title: "The Met Gala: A Cultural Phenomenon",
-    subtitle: "Beyond the red carpet, how the annual event became a battleground for fashion, celebrity, and cultural statements.",
-    authorId: "author-1",
-    coverImage: "https://picsum.photos/seed/met-gala-fashion/1200/800",
-    imageHint: "red carpet",
-    content: "The first Monday in May. For fashion insiders, it's the most important date on the calendar. The Met Gala is more than just a party; it's a high-stakes performance where designers, celebrities, and stylists compete for cultural relevance. From Rihanna's iconic papal look to Kim Kardashian's headline-grabbing caution tape, the red carpet has become a space for viral moments and bold political statements. This piece examines the evolution of the Met Gala from a high-society fundraiser to a global media spectacle. We analyze its economic impact on the fashion industry and its role in shaping mainstream trends, asking what its enduring popularity says about our contemporary obsession with celebrity and image.",
-    tags: ["Met Gala", "Celebrity", "Fashion", "Culture"],
-    category: "Culture",
-    publishDate: "2024-05-08T18:00:00Z",
+    id: '7',
+    slug: 'the-rise-of-k-pop-a-global-phenomenon',
+    title: 'The Rise of K-Pop: A Global Cultural Phenomenon',
+    subtitle: 'Beyond the music, K-Pop is a universe of fashion, beauty, and fan culture.',
+    authorId: '2',
+    coverImage: 'https://picsum.photos/seed/kpop-phenomenon/1200/800',
+    imageHint: 'kpop group',
+    content: "In just over a decade, K-Pop has grown from a regional music genre into a multi-billion dollar global industry that influences everything from fashion trends to beauty standards. Groups like BTS and Blackpink are household names, commanding legions of dedicated fans. This article unpacks the K-Pop phenomenon, exploring the meticulous training systems, the stunning visual productions, and the powerful bond between idols and their fandoms. We analyze K-Pop's unique blend of music, performance, and fashion, and its role as a major force of South Korean soft power on the world stage.",
+    tags: ['K-Pop', 'BTS', 'Blackpink', 'Music', 'Culture'],
+    category: 'Culture',
+    publishDate: '2024-07-05T15:00:00Z',
     featured: false,
     editorsPick: false,
   }
 ];
 
-export const events: Event[] = [
+const events: Event[] = [
   {
-    id: "event-1",
-    slug: "louis-vuitton-x-pop-up",
+    id: '1',
+    slug: 'louis-vuitton-x-pop-up',
     title: "Louis Vuitton 'X' Pop-Up Experience",
-    description: "Explore a limited-time installation celebrating 160 years of artistic collaborations at Louis Vuitton. Discover exclusive items and immerse yourself in the world of LV.",
-    image: "https://picsum.photos/seed/lv-popup/1200/800",
-    imageHint: "luxury fashion",
+    description: "An immersive journey through 160 years of artistic collaborations and creative exchanges from the Maison's archives. Discover rare pieces and interactive installations.",
+    image: 'https://picsum.photos/seed/lv-experience/1200/800',
+    imageHint: 'luxury fashion',
     location: {
-      name: "The Annex",
-      address: "451 Art District Rd, Downtown",
+      name: 'Gagosian Gallery, Chelsea',
+      address: '555 W 24th St, New York, NY 10011'
     },
-    date: "2024-06-05",
-    time: "11:00 - 20:00 (EST)",
+    date: '2024-08-15T10:00:00Z',
+    time: '11:00 AM - 7:00 PM Daily'
   },
   {
-    id: "event-2",
-    slug: "saint-laurent-rive-droite-ephemeral-gallery",
-    title: "Saint Laurent Rive Droite Ephemeral Gallery",
-    description: "A curated exhibition of art, photography, and design by Anthony Vaccarello. This special event showcases the cultural universe of Saint Laurent in a unique gallery setting.",
-    image: "https://picsum.photos/seed/ysl-gallery/1200/800",
-    imageHint: "minimalist gallery",
+    id: '2',
+    slug: 'saint-laurent-rive-droite-gallery',
+    title: 'Saint Laurent Rive Droite Ephemeral Gallery',
+    description: 'A temporary gallery curated by Anthony Vaccarello, featuring a selection of contemporary art, rare books, and vintage furniture that reflects the Saint Laurent universe.',
+    image: 'https://picsum.photos/seed/sl-gallery/1200/800',
+    imageHint: 'minimalist gallery',
     location: {
-      name: "Rive Droite Gallery",
-      address: "8 Rue de la Paix, Paris",
+      name: 'Rive Droite',
+      address: '213 Rue Saint-Honoré, 75001 Paris, France'
     },
-    date: "2024-06-18",
-    time: "10:00 - 19:00 (CET)",
+    date: '2024-09-05T10:00:00Z',
+    time: '10:00 AM - 6:00 PM'
   },
   {
-    id: "event-3",
-    slug: "balenciaga-couture-screening",
+    id: '3',
+    slug: 'balenciaga-couture-show-screening',
     title: "Screening: Balenciaga's 52nd Couture Show",
-    description: "An exclusive cinematic screening of Demna's latest Couture collection for Balenciaga, followed by a panel discussion with leading fashion critics.",
-    image: "https://picsum.photos/seed/balenciaga-screening/1200/800",
-    imageHint: "fashion show",
+    description: "An exclusive public screening of Demna's latest couture collection for Balenciaga. Experience the artistry and innovation of modern haute couture on the big screen.",
+    image: 'https://picsum.photos/seed/balenciaga-show/1200/800',
+    imageHint: 'fashion show',
     location: {
-      name: "The Metrograph",
-      address: "7 Ludlow St, New York",
+      name: 'The Landmark Theatre',
+      address: '10850 W Pico Blvd, Los Angeles, CA 90064'
     },
-    date: "2024-06-25",
-    time: "19:30 - 21:30 (EST)",
+    date: '2024-08-22T19:00:00Z',
+    time: '7:30 PM'
   },
-  {
-    id: "event-4",
-    slug: "art-basel-miami-beach-2024",
-    title: "Art Basel Miami Beach 2024",
-    description: "The leading global art fair for modern and contemporary art. Discover works from over 4,000 artists, presented by leading galleries from around the world.",
-    image: "https://picsum.photos/seed/art-basel/1200/800",
-    imageHint: "art fair",
+   {
+    id: '4',
+    slug: 'met-gala-retrospective',
+    title: 'The Met Gala: A Fashion Retrospective',
+    description: "Explore the most iconic looks from the Met Gala's history in this stunning retrospective. See up close the garments that defined a generation of red carpets.",
+    image: 'https://picsum.photos/seed/met-gala/1200/800',
+    imageHint: 'red carpet',
     location: {
-      name: "Miami Beach Convention Center",
-      address: "1901 Convention Center Dr, Miami Beach",
+      name: 'The Metropolitan Museum of Art',
+      address: '1000 5th Ave, New York, NY 10028'
     },
-    date: "2024-12-06",
-    time: "11:00 - 18:00 (EST)",
-  },
-  {
-    id: "event-5",
-    slug: "frieze-london-2024",
-    title: "Frieze London 2024",
-    description: "One of the world's most influential contemporary art fairs, Frieze London features over 160 of the world's leading galleries. See and buy art from over 1,000 of today's leading artists.",
-    image: "https://picsum.photos/seed/frieze-london/1200/800",
-    imageHint: "contemporary art",
-    location: {
-      name: "The Regent's Park",
-      address: "London, UK",
-    },
-    date: "2024-10-09",
-    time: "11:00 - 19:00 (BST)",
-  },
+    date: '2024-10-01T10:00:00Z',
+    time: '10:00 AM - 5:00 PM'
+  }
 ];
-    
+
+
+// --- API Functions ---
+
+// Author Functions
+export async function getAuthors(): Promise<Author[]> {
+    return Promise.resolve(authors);
+}
+
+export async function getAuthor(id: string): Promise<Author | null> {
+    const author = authors.find(a => a.id === id);
+    return Promise.resolve(author || null);
+}
+
+// Article Functions
+export async function getArticles(category?: string): Promise<Article[]> {
+    let filteredArticles = articles;
+    if (category) {
+        filteredArticles = articles.filter(a => a.category === category);
+    }
+    return Promise.resolve(filteredArticles.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()));
+}
+
+export async function getArticle(slug: string): Promise<Article | null> {
+    const article = articles.find(a => a.slug === slug);
+    return Promise.resolve(article || null);
+}
+
+
+// Event Functions
+export async function getEvents(): Promise<Event[]> {
+    return Promise.resolve(events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()));
+}
+
+export async function getEvent(slug: string): Promise<Event | null> {
+    const event = events.find(e => e.slug === slug);
+    return Promise.resolve(event || null);
+}
+
+export async function createArticle(article: Omit<Article, 'id'>): Promise<string> {
+    const newId = (articles.length + 1).toString();
+    const newArticle = { ...article, id: newId };
+    articles.push(newArticle);
+    console.log("Created article:", newArticle)
+    return Promise.resolve(newId);
+}
+
+export async function updateArticle(id: string, articleUpdate: Partial<Article>): Promise<void> {
+    const index = articles.findIndex(a => a.id === id);
+    if (index > -1) {
+        articles[index] = { ...articles[index], ...articleUpdate };
+        console.log("Updated article:", articles[index])
+    }
+    return Promise.resolve();
+}
+
+export async function deleteArticle(id: string): Promise<void> {
+    const index = articles.findIndex(a => a.id === id);
+    if (index > -1) {
+        articles.splice(index, 1);
+        console.log("Deleted article with id:", id)
+    }
+    return Promise.resolve();
+}

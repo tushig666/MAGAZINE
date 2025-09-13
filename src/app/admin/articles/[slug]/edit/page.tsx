@@ -9,11 +9,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { articles, authors } from "@/lib/data";
+import { getArticle, getAuthors } from "@/lib/data";
 import Link from "next/link";
 
-export default function EditArticlePage({ params }: { params: { slug: string } }) {
-    const article = articles.find((a) => a.slug === params.slug);
+export default async function EditArticlePage({ params }: { params: { slug: string } }) {
+    const article = await getArticle(params.slug);
+    const authors = await getAuthors();
 
     if (!article) {
         notFound();

@@ -1,10 +1,8 @@
-import { articles } from "@/lib/data";
+import { getArticles } from "@/lib/data";
 import { ArticleCard } from "@/components/articles/ArticleCard";
 
-export default function FashionPage() {
-  const fashionArticles = articles.filter(
-    (article) => article.category === "Fashion"
-  );
+export default async function FashionPage() {
+  const fashionArticles = await getArticles("Fashion");
 
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">

@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { articles } from "@/lib/data";
+import { getArticles } from "@/lib/data";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +19,8 @@ import { MoreHorizontal } from "lucide-react";
 import { LogoutButton } from "./logout-button";
 import Link from "next/link";
 
-export default function AdminPage() {
+export default async function AdminPage() {
+  const articles = await getArticles();
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">
       <header className="flex justify-between items-center mb-12">

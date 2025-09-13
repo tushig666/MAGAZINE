@@ -1,10 +1,8 @@
-import { articles } from "@/lib/data";
+import { getArticles } from "@/lib/data";
 import { ArticleCard } from "@/components/articles/ArticleCard";
 
-export default function ArtPage() {
-  const artArticles = articles.filter(
-    (article) => article.category === "Art"
-  );
+export default async function ArtPage() {
+  const artArticles = await getArticles("Art");
 
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">

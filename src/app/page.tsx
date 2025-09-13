@@ -1,17 +1,19 @@
-import { articles } from "@/lib/data";
+import { getArticles } from "@/lib/data";
 import { HeroCarousel } from "@/components/home/HeroCarousel";
 import { ArticleCard } from "@/components/articles/ArticleCard";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
-export default function Home() {
-  const featuredArticles = articles.filter((article) => article.featured);
-  const latestArticles = articles
+export default async function Home() {
+  const allArticles = await getArticles();
+  
+  const featuredArticles = allArticles.filter((article) => article.featured);
+  const latestArticles = allArticles
     .sort(
       (a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime()
     )
     .slice(0, 4);
-  const editorsPicks = articles.filter((article) => article.editorsPick);
+  const editorsPicks = allArticles.filter((article) => article.editorsPick);
 
   return (
     <div className="space-y-16 md:space-y-24">

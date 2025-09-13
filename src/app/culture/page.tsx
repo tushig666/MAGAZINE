@@ -1,10 +1,8 @@
-import { articles } from "@/lib/data";
+import { getArticles } from "@/lib/data";
 import { ArticleCard } from "@/components/articles/ArticleCard";
 
-export default function CulturePage() {
-  const cultureArticles = articles.filter(
-    (article) => article.category === "Culture"
-  );
+export default async function CulturePage() {
+  const cultureArticles = await getArticles("Culture");
 
   return (
     <div className="container mx-auto px-4 py-16 md:py-24">

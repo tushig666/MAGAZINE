@@ -1,17 +1,18 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { events } from "@/lib/data";
+import { getEvents, getEvent } from "@/lib/data";
 import { RsvpModal } from "@/components/events/RsvpModal";
 import { Calendar, MapPin, Clock } from "lucide-react";
 
 export async function generateStaticParams() {
+  const events = await getEvents();
   return events.map((event) => ({
     slug: event.slug,
   }));
 }
 
-export default function EventPage({ params }: { params: { slug: string } }) {
-  const event = events.find((e) => e.slug === params.slug);
+export default async function EventPage({ params }: { params: { slug: string } }) {
+  const event = await getEvent(params.slug);
 
   if (!event) {
     notFound();
