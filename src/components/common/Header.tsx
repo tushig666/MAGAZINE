@@ -5,6 +5,8 @@ import { Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { useState } from "react";
+import { usePathname } from 'next/navigation'
+import { cn } from "@/lib/utils";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -16,12 +18,13 @@ const navLinks = [
 
 export function Header() {
   const [isSheetOpen, setSheetOpen] = useState(false);
+  const pathname = usePathname();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <div className="flex items-center gap-6">
-          <Link href="/" className="text-2xl font-bold font-headline tracking-tight">
+          <Link href="/" className="text-2xl font-headline tracking-tight" style={{fontFamily: "'Libre Baskerville', serif"}}>
             VogueX
           </Link>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
@@ -29,7 +32,10 @@ export function Header() {
               <Link
                 key={label}
                 href={href}
-                className="transition-colors hover:text-foreground/80 text-foreground/60"
+                className={cn(
+                    "transition-colors hover:text-primary",
+                    pathname === href ? "text-primary" : "text-foreground/60"
+                )}
               >
                 {label}
               </Link>
@@ -52,7 +58,7 @@ export function Header() {
             </SheetTrigger>
             <SheetContent side="left">
               <div className="flex flex-col gap-6 p-6">
-                <Link href="/" className="mb-4 text-2xl font-bold font-headline tracking-tight" onClick={() => setSheetOpen(false)}>
+                <Link href="/" className="mb-4 text-2xl font-headline tracking-tight" onClick={() => setSheetOpen(false)} style={{fontFamily: "'Libre Baskerville', serif"}}>
                   VogueX
                 </Link>
                 <nav className="flex flex-col gap-4">
@@ -60,7 +66,10 @@ export function Header() {
                     <Link
                       key={label}
                       href={href}
-                      className="text-lg font-medium"
+                      className={cn(
+                        "text-lg font-medium transition-colors hover:text-primary",
+                        pathname === href ? "text-primary" : ""
+                      )}
                       onClick={() => setSheetOpen(false)}
                     >
                       {label}

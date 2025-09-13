@@ -65,7 +65,7 @@ export const articles: Article[] = [
     imageHint: "fashion model",
     content: "There was a time when models were simply beautiful canvases for a designer's vision. Today, they are brands in their own right. Figures like Bella Hadid, Kendall Jenner, and Adut Akech are not just faces; they are powerful entrepreneurs, activists, and media moguls with global influence that extends far beyond the catwalk. This piece explores the new paradigm of the supermodel in the digital age. We examine how social media has given them a direct line to their audience, allowing them to shape conversations around body positivity, sustainability, and social justice. Through exclusive interviews and analysis, we uncover how these models are navigating the pressures of the industry while building multi-faceted careers that redefine what it means to be a model today. They are the new power players, using their visibility to not just sell clothes, but to inspire change.",
     tags: ["Models", "Culture", "Social Media"],
-    category: "Culture",
+    category: "Fashion",
     publishDate: "2024-05-12T09:00:00Z",
     featured: false,
     editorsPick: true,
