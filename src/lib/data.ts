@@ -232,21 +232,22 @@ export async function getEvent(slug: string): Promise<Event | null> {
     return Promise.resolve(event || null);
 }
 
-export async function createArticle(article: Omit<Article, 'id'>): Promise<string> {
+export async function createArticle(article: Omit<Article, 'id'>): Promise<Article> {
     const newId = (articles.length + 1).toString();
     const newArticle = { ...article, id: newId };
     articles.push(newArticle);
     console.log("Created article:", newArticle)
-    return Promise.resolve(newId);
+    return Promise.resolve(newArticle);
 }
 
-export async function updateArticle(id: string, articleUpdate: Partial<Article>): Promise<void> {
+export async function updateArticle(id: string, articleUpdate: Partial<Article>): Promise<Article | null> {
     const index = articles.findIndex(a => a.id === id);
     if (index > -1) {
         articles[index] = { ...articles[index], ...articleUpdate };
         console.log("Updated article:", articles[index])
+        return Promise.resolve(articles[index]);
     }
-    return Promise.resolve();
+    return Promise.resolve(null);
 }
 
 export async function deleteArticle(id: string): Promise<void> {

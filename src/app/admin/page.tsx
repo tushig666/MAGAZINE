@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreHorizontal } from "lucide-react";
 import Link from "next/link";
+import { LogoutButton } from "./logout-button";
 
 export default async function AdminPage() {
   const articles = await getArticles();
@@ -27,6 +28,7 @@ export default async function AdminPage() {
           Admin Dashboard
         </h1>
         <div className="flex items-center gap-4">
+           <LogoutButton />
           <Button asChild>
             <Link href="/admin/new">New Article</Link>
           </Button>
