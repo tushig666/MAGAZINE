@@ -14,6 +14,7 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
   { href: "/privacy", label: "Privacy Policy" },
   { href: "/terms", label: "Terms of Service" },
+  { href: "/admin", label: "Admin" },
 ];
 
 export function Footer() {
