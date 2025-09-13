@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { generateArticleReadTime } from "@/ai/flows/generate-article-read-time";
+// import { generateArticleReadTime } from "@/ai/flows/generate-article-read-time";
 import { Skeleton } from "@/components/ui/skeleton";
 import { BookOpen, Newspaper } from "lucide-react";
 
@@ -17,8 +17,14 @@ export default function ArticleContent({ content }: ArticleContentProps) {
     const fetchReadTime = async () => {
       setIsLoading(true);
       try {
-        const result = await generateArticleReadTime({ content });
-        setReadTime(result.readTimeMinutes);
+        // AI call temporarily disabled
+        // const result = await generateArticleReadTime({ content });
+        // setReadTime(result.readTimeMinutes);
+        
+        // Fallback for read time
+        const wordsPerMinute = 200;
+        const wordCount = content.split(/\s+/).length;
+        setReadTime(Math.ceil(wordCount / wordsPerMinute));
       } catch (error) {
         console.error("Failed to generate read time:", error);
         // Fallback for read time

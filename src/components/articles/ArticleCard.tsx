@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { summarizeArticle } from "@/ai/flows/ai-powered-content-summaries";
-import { generateArticleReadTime } from "@/ai/flows/generate-article-read-time";
+// import { summarizeArticle } from "@/ai/flows/ai-powered-content-summaries";
+// import { generateArticleReadTime } from "@/ai/flows/generate-article-read-time";
 import { useEffect, useState } from "react";
 import { BookOpen } from "lucide-react";
 
@@ -30,12 +30,20 @@ export function ArticleCard({ article }: ArticleCardProps) {
     const fetchAiData = async () => {
       setIsLoading(true);
       try {
-        const [summaryResult, readTimeResult] = await Promise.all([
-          summarizeArticle({ articleContent: article.content }),
-          generateArticleReadTime({ content: article.content }),
-        ]);
-        setSummary(summaryResult.summary);
-        setReadTime(readTimeResult.readTimeMinutes);
+        // AI calls are temporarily disabled to avoid rate limiting issues.
+        // const [summaryResult, readTimeResult] = await Promise.all([
+        //   summarizeArticle({ articleContent: article.content }),
+        //   generateArticleReadTime({ content: article.content }),
+        // ]);
+        // setSummary(summaryResult.summary);
+        // setReadTime(readTimeResult.readTimeMinutes);
+        
+        // Fallback logic
+        setSummary(article.subtitle.slice(0, 100) + '...');
+        const wordsPerMinute = 200;
+        const wordCount = article.content.split(/\s+/).length;
+        setReadTime(Math.ceil(wordCount / wordsPerMinute));
+
       } catch (error) {
         console.error("Failed to fetch AI data:", error);
         // Fallback to a truncated subtitle if summary fails
