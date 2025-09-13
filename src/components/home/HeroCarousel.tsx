@@ -49,7 +49,7 @@ export function HeroCarousel({ articles }: HeroCarouselProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
               <div className="absolute inset-0 flex flex-col items-center justify-end text-center text-white p-8 md:p-12">
                 <div className="max-w-4xl">
-                  <p className="text-sm font-semibold uppercase tracking-widest text-accent mb-2">
+                  <p className="text-sm font-semibold uppercase tracking-widest text-primary mb-2">
                     Featured Story
                   </p>
                   <h1 className="text-4xl md:text-6xl lg:text-7xl font-headline font-bold leading-tight">
