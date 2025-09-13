@@ -11,16 +11,35 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import Link from "next/link";
+import { deleteArticle } from "@/lib/data";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
+
 
 interface AdminArticleListProps {
   articles: Article[];
 }
 
 export function AdminArticleList({ articles }: AdminArticleListProps) {
-  const handleDelete = async (id: string) => {
-    if (confirm("Are you sure you want to delete this article?")) {
-      // Add delete logic here later
-      alert(`Article with id ${id} would be deleted.`);
+  const { toast } = useToast();
+  const router = useRouter();
+
+  const handleDelete = async (id: string, title: string) => {
+    if (confirm(`Are you sure you want to delete the article "${title}"?`)) {
+      try {
+        await deleteArticle(id);
+        toast({
+          title: "Article Deleted",
+          description: `"${title}" has been successfully deleted.`,
+        });
+        router.refresh();
+      } catch (error) {
+        toast({
+          variant: "destructive",
+          title: "Error deleting article",
+          description: "Could not delete the article. Please try again.",
+        });
+      }
     }
   };
 
@@ -49,7 +68,7 @@ export function AdminArticleList({ articles }: AdminArticleListProps) {
               <Button
                 variant="destructive"
                 size="sm"
-                onClick={() => handleDelete(article.id)}
+                onClick={() => handleDelete(article.id, article.title)}
               >
                 Delete
               </Button>
