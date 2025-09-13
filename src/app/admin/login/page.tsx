@@ -38,7 +38,9 @@ export default function LoginPage() {
       toast({
         variant: "destructive",
         title: "Login Failed",
-        description: "Incorrect email or password. Please try again.",
+        description:
+          (error as Error).message ||
+          "Incorrect email or password. Please try again.",
       });
     } finally {
       setIsLoading(false);
