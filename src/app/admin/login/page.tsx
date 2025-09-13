@@ -42,6 +42,7 @@ export default function LoginPage() {
           (error as Error).message ||
           "Incorrect email or password. Please try again.",
       });
+    } finally {
       setIsLoading(false);
     }
   };
