@@ -19,6 +19,7 @@ import { Input } from "@/components/ui/input";
 import { searchArticles } from "@/lib/data";
 import type { Article } from "@/lib/types";
 import Image from "next/image";
+import { useAuth } from "@/lib/AuthContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -35,6 +36,8 @@ export function Header() {
   const [searchResults, setSearchResults] = useState<Article[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const pathname = usePathname();
+  const { user } = useAuth();
+
 
   useEffect(() => {
     if (!isSearchOpen) {
@@ -44,18 +47,21 @@ export function Header() {
   }, [isSearchOpen]);
   
   useEffect(() => {
-    if (searchQuery.trim().length > 2) {
-      setIsSearching(true);
-      const delayDebounceFn = setTimeout(async () => {
-        const results = await searchArticles(searchQuery);
-        setSearchResults(results);
-        setIsSearching(false);
-      }, 500);
-
-      return () => clearTimeout(delayDebounceFn);
-    } else {
-      setSearchResults([]);
+    const performSearch = async () => {
+        if (searchQuery.trim().length > 2) {
+            setIsSearching(true);
+            const results = await searchArticles(searchQuery);
+            setSearchResults(results);
+            setIsSearching(false);
+        } else {
+            setSearchResults([]);
+        }
     }
+    const delayDebounceFn = setTimeout(() => {
+        performSearch();
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
 
@@ -81,6 +87,9 @@ export function Header() {
                 {label.toUpperCase()}
               </Link>
             ))}
+             {user && pathname.startsWith('/admin') && (
+               <Link href="/admin" className={cn("transition-colors hover:text-primary tracking-wider", pathname.startsWith('/admin') ? "text-primary" : "text-foreground/70")}>ADMIN</Link>
+            )}
           </nav>
 
         <div className="flex items-center gap-2">
@@ -165,6 +174,9 @@ export function Header() {
                       {label}
                     </Link>
                   ))}
+                   {user && (
+                    <Link href="/admin" className={cn("text-lg font-medium transition-colors hover:text-primary", pathname.startsWith('/admin') ? "text-primary" : "")} onClick={() => setSheetOpen(false)}>Admin</Link>
+                  )}
                 </nav>
               </div>
             </SheetContent>
