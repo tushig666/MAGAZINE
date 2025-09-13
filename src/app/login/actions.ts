@@ -13,6 +13,7 @@ export async function login(prevState: { error: string } | undefined, formData: 
     const session = {
       isLoggedIn: true,
       email: "admin@example.com",
+      role: "admin",
     };
     
     cookies().set("session", JSON.stringify(session), {
