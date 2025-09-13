@@ -23,6 +23,7 @@ export async function login(prevState: { error: string } | undefined, formData: 
       path: "/",
     });
     
+    // Redirect must be called after setting the cookie.
     return redirect("/admin");
   }
 
