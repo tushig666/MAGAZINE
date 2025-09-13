@@ -20,10 +20,15 @@ export default async function Home() {
       <HeroCarousel articles={featuredArticles} />
 
       <section className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-headline font-bold text-center mb-12">
-          Latest Stories
-        </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="flex justify-between items-center mb-8">
+            <h2 className="text-3xl md:text-4xl font-headline font-bold">
+            Latest Stories
+            </h2>
+            <Button variant="link" asChild>
+                <Link href="/fashion">View All Stories</Link>
+            </Button>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
           {latestArticles.map((article) => (
             <ArticleCard key={article.id} article={article} />
           ))}

@@ -24,80 +24,55 @@ interface ArticleCardProps {
 export function ArticleCard({ article }: ArticleCardProps) {
   const [summary, setSummary] = useState<string | null>(null);
   const [readTime, setReadTime] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchAiData = async () => {
-      setIsLoading(true);
-      try {
-        // AI calls are temporarily disabled to avoid rate limiting issues.
-        // const [summaryResult, readTimeResult] = await Promise.all([
-        //   summarizeArticle({ articleContent: article.content }),
-        //   generateArticleReadTime({ content: article.content }),
-        // ]);
-        // setSummary(summaryResult.summary);
-        // setReadTime(readTimeResult.readTimeMinutes);
-        
-        // Fallback logic
-        setSummary(article.subtitle.slice(0, 100) + '...');
-        const wordsPerMinute = 200;
-        const wordCount = article.content.split(/\s+/).length;
-        setReadTime(Math.ceil(wordCount / wordCount));
-
-      } catch (error) {
-        console.error("Failed to fetch AI data:", error);
-        // Fallback to a truncated subtitle if summary fails
-        setSummary(article.subtitle.slice(0, 100) + '...');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchAiData();
-  }, [article.content, article.subtitle]);
+  // AI-powered summary and read time calculation is disabled for now.
+  // We can re-enable this later with a more optimized strategy.
+  // useEffect(() => {
+  //   const fetchAiData = async () => {
+  //     setIsLoading(true);
+  //     try {
+  //       const [summaryResult, readTimeResult] = await Promise.all([
+  //         summarizeArticle({ articleContent: article.content }),
+  //         generateArticleReadTime({ content: article.content }),
+  //       ]);
+  //       setSummary(summaryResult.summary);
+  //       setReadTime(readTimeResult.readTimeMinutes);
+  //     } catch (error) {
+  //       console.error("Failed to fetch AI data:", error);
+  //       setSummary(article.subtitle.slice(0, 100) + '...');
+  //       const wordsPerMinute = 200;
+  //       const wordCount = article.content.split(/\s+/).length;
+  //       setReadTime(Math.ceil(wordCount / wordsPerMinute));
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+  //   fetchAiData();
+  // }, [article.content, article.subtitle]);
 
   return (
     <Link href={`/articles/${article.slug}`} className="group">
-      <Card className="h-full flex flex-col overflow-hidden transition-all duration-300 hover:shadow-xl hover:-translate-y-1 border-0 bg-transparent shadow-none rounded-none">
-        <CardHeader className="p-0">
-          <div className="relative aspect-[3/4] w-full">
-            <Image
-              src={article.coverImage}
-              alt={article.title}
-              fill
-              className="object-cover"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-              data-ai-hint={article.imageHint}
-            />
-          </div>
-        </CardHeader>
-        <CardContent className="p-4 flex-1 flex flex-col">
-          <Badge variant="outline" className="mb-2 w-fit rounded-sm">{article.category}</Badge>
-          <CardTitle className="font-headline text-2xl leading-snug group-hover:text-primary transition-colors">
+      <div className="overflow-hidden">
+        <div className="relative aspect-[3/4] w-full overflow-hidden">
+          <Image
+            src={article.coverImage}
+            alt={article.title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            data-ai-hint={article.imageHint}
+          />
+        </div>
+        <div className="pt-4">
+          <Badge variant="outline" className="mb-2 rounded-sm border-foreground/40 text-foreground/60 text-xs tracking-widest">
+            {article.category.toUpperCase()}
+          </Badge>
+          <h3 className="font-headline text-lg md:text-xl leading-snug group-hover:text-primary transition-colors">
             {article.title}
-          </CardTitle>
-          <div className="mt-3 text-sm text-muted-foreground flex-1">
-            {isLoading ? (
-              <div className="space-y-2">
-                <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-5/6" />
-              </div>
-            ) : (
-              <p>{summary}</p>
-            )}
-          </div>
-        </CardContent>
-        <CardFooter className="p-4 pt-0 text-xs text-muted-foreground flex items-center justify-between">
-           <div className="flex items-center gap-2">
-            <BookOpen className="w-4 h-4" />
-            {isLoading || readTime === null ? (
-              <Skeleton className="h-4 w-16" />
-            ) : (
-              <span>{readTime} min read</span>
-            )}
-           </div>
-        </CardFooter>
-      </Card>
+          </h3>
+        </div>
+      </div>
     </Link>
   );
 }
