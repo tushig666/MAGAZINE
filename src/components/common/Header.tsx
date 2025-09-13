@@ -19,7 +19,6 @@ import { Input } from "@/components/ui/input";
 import { searchArticles } from "@/lib/data";
 import type { Article } from "@/lib/types";
 import Image from "next/image";
-import { useAuth } from "@/lib/AuthContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -36,8 +35,6 @@ export function Header() {
   const [searchResults, setSearchResults] = useState<Article[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const pathname = usePathname();
-  const { user } = useAuth();
-
 
   useEffect(() => {
     if (!isSearchOpen) {
@@ -87,7 +84,7 @@ export function Header() {
                 {label.toUpperCase()}
               </Link>
             ))}
-             {user && pathname.startsWith('/admin') && (
+             {pathname.startsWith('/admin') && (
                <Link href="/admin" className={cn("transition-colors hover:text-primary tracking-wider", pathname.startsWith('/admin') ? "text-primary" : "text-foreground/70")}>ADMIN</Link>
             )}
           </nav>
@@ -174,7 +171,7 @@ export function Header() {
                       {label}
                     </Link>
                   ))}
-                   {user && (
+                   {pathname.startsWith('/admin') && (
                     <Link href="/admin" className={cn("text-lg font-medium transition-colors hover:text-primary", pathname.startsWith('/admin') ? "text-primary" : "")} onClick={() => setSheetOpen(false)}>Admin</Link>
                   )}
                 </nav>
