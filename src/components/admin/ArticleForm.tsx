@@ -39,7 +39,6 @@ const formSchema = z.object({
   authorId: z.string({ required_error: "Please select an author." }),
   category: z.string().min(1, { message: "Category is required." }),
   coverImage: z.string().url({ message: "A cover image is required." }).or(z.literal("")),
-  imageHint: z.string().max(20, { message: "Hint cannot be more than 20 characters." }).optional(),
   content: z.string().min(50, { message: "Content must be at least 50 characters long." }),
   tags: z.array(z.object({ value: z.string().min(1) })),
   publishDate: z.string(),
@@ -68,7 +67,6 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
       authorId: article?.authorId || "",
       category: article?.category || "Fashion",
       coverImage: article?.coverImage || "",
-      imageHint: article?.imageHint || "",
       content: article?.content || "",
       tags: article?.tags.map(t => ({ value: t })) || [{ value: "" }],
       publishDate: article?.publishDate || new Date().toISOString(),
@@ -253,22 +251,6 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
                     <span className="text-sm text-muted-foreground">{Math.round(uploadProgress)}%</span>
                 </div>
               )}
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-         <FormField
-          control={form.control}
-          name="imageHint"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image AI Hint</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g. man smiling" {...field} />
-              </FormControl>
-              <FormDescription>
-                A hint for AI to find a replacement image. Max 2 words.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
