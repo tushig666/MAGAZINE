@@ -1,3 +1,70 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "author1",
+      "description": "Portrait of author Elena Petrov",
+      "imageUrl": "https://picsum.photos/seed/author1/100/100",
+      "imageHint": "woman portrait"
+    },
+    {
+      "id": "author2",
+      "description": "Portrait of author Kenji Tanaka",
+      "imageUrl": "https://picsum.photos/seed/author2/100/100",
+      "imageHint": "man portrait"
+    },
+    {
+      "id": "author3",
+      "description": "Portrait of author Aisha Williams",
+      "imageUrl": "https://picsum.photos/seed/author3/100/100",
+      "imageHint": "woman smiling"
+    },
+    {
+      "id": "article1",
+      "description": "Cover image for 'The Renaissance of Haute Couture'",
+      "imageUrl": "https://picsum.photos/seed/article1/1200/800",
+      "imageHint": "fashion design"
+    },
+    {
+      "id": "article2",
+      "description": "Cover image for 'Tokyo Street Style: A Visual Diary'",
+      "imageUrl": "https://picsum.photos/seed/article2/1200/800",
+      "imageHint": "tokyo street"
+    },
+    {
+      "id": "article3",
+      "description": "Cover image for 'The Art of the Unseen: Sound Installations'",
+      "imageUrl": "https://picsum.photos/seed/article3/1200/800",
+      "imageHint": "art gallery"
+    },
+    {
+      "id": "article4",
+      "description": "Cover image for 'Sustainable Fashion: Beyond the Buzzword'",
+      "imageUrl": "https://picsum.photos/seed/article4/1200/800",
+      "imageHint": "sustainable fabric"
+    },
+    {
+      "id": "article5",
+      "description": "Cover image for 'An Interview with a Visionary Artist'",
+      "imageUrl": "https://picsum.photos/seed/article5/1200/800",
+      "imageHint": "artist studio"
+    },
+    {
+      "id": "event1",
+      "description": "Image for 'Vernissage: Future Landscapes'",
+      "imageUrl": "https://picsum.photos/seed/event1/1200/800",
+      "imageHint": "abstract art"
+    },
+    {
+      "id": "event2",
+      "description": "Image for 'Runway Show: Atelier X'",
+      "imageUrl": "https://picsum.photos/seed/event2/1200/800",
+      "imageHint": "fashion runway"
+    },
+    {
+      "id": "event3",
+      "description": "Image for 'Artist Talk: Kenji Tanaka'",
+      "imageUrl": "https://picsum.photos/seed/event3/1200/800",
+      "imageHint": "lecture hall"
+    }
+  ]
 }
