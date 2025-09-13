@@ -2,21 +2,25 @@ import { NextResponse, type NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
   const session = request.cookies.get("session");
+  const { pathname } = request.nextUrl;
 
-  // If the user is on the login page
-  if (request.nextUrl.pathname.startsWith("/login")) {
-    // If they are already logged in, redirect to admin
-    if (session) {
+  // Check if there's an active session
+  const hasSession = !!session;
+
+  // If the user is trying to access the login page
+  if (pathname === "/login") {
+    // If they already have a session, redirect them to the admin dashboard
+    if (hasSession) {
       return NextResponse.redirect(new URL("/admin", request.url));
     }
-    // Otherwise, let them see the login page
+    // Otherwise, allow them to view the login page
     return NextResponse.next();
   }
 
-  // For any other route under /admin
-  if (request.nextUrl.pathname.startsWith("/admin")) {
-    // If they are not logged in, redirect to login
-    if (!session) {
+  // If the user is trying to access any admin route
+  if (pathname.startsWith("/admin")) {
+    // If they do not have a session, redirect them to the login page
+    if (!hasSession) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
   }
