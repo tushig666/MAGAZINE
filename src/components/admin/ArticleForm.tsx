@@ -26,8 +26,11 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import { createArticle, updateArticle } from "@/lib/data";
-import { X } from "lucide-react";
+import { createArticle, updateArticle, uploadImage } from "@/lib/data";
+import { X, Upload } from "lucide-react";
+import { useState } from "react";
+import Image from "next/image";
+import { Progress } from "@/components/ui/progress";
 
 const formSchema = z.object({
   title: z.string().min(3, { message: "Title must be at least 3 characters long." }),
@@ -35,7 +38,7 @@ const formSchema = z.object({
   slug: z.string().min(3, { message: "Slug must be at least 3 characters long." }),
   authorId: z.string({ required_error: "Please select an author." }),
   category: z.string().min(1, { message: "Category is required." }),
-  coverImage: z.string().url({ message: "Please enter a valid URL." }),
+  coverImage: z.string().url({ message: "Please enter a valid URL." }).or(z.any()),
   imageHint: z.string().max(20, { message: "Hint cannot be more than 20 characters." }).optional(),
   content: z.string().min(50, { message: "Content must be at least 50 characters long." }),
   tags: z.array(z.object({ value: z.string().min(1) })),
@@ -52,6 +55,9 @@ interface ArticleFormProps {
 export function ArticleForm({ article, authors }: ArticleFormProps) {
   const { toast } = useToast();
   const router = useRouter();
+  const [uploadProgress, setUploadProgress] = useState<number | null>(null);
+  const [previewImage, setPreviewImage] = useState<string | null>(article?.coverImage || null);
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -76,10 +82,28 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
     name: "tags",
   });
 
+  const handleImageUpload = async (file: File) => {
+    if (!file) return;
+    try {
+      const downloadURL = await uploadImage(file, setUploadProgress);
+      form.setValue("coverImage", downloadURL);
+      setPreviewImage(downloadURL);
+      setUploadProgress(null);
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Image upload failed",
+        description: "Could not upload the image. Please try again.",
+      });
+      setUploadProgress(null);
+    }
+  };
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     const articleData = {
       ...values,
       tags: values.tags.map(t => t.value),
+      coverImage: previewImage || values.coverImage,
     };
     try {
       if (article) {
@@ -146,17 +170,53 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
           )}
         />
         <FormField
-          control={form.control}
-          name="coverImage"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Cover Image URL</FormLabel>
-              <FormControl>
-                <Input placeholder="https://example.com/image.jpg" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+            control={form.control}
+            name="coverImage"
+            render={({ field }) => (
+                <FormItem>
+                    <FormLabel>Cover Image</FormLabel>
+                    <FormControl>
+                        <div>
+                            <Input
+                                id="cover-image-upload"
+                                type="file"
+                                className="hidden"
+                                accept="image/png, image/jpeg, image/gif, image/webp"
+                                onChange={(e) => {
+                                    if (e.target.files && e.target.files[0]) {
+                                        handleImageUpload(e.target.files[0]);
+                                    }
+                                }}
+                            />
+                            <label
+                                htmlFor="cover-image-upload"
+                                className="group cursor-pointer"
+                            >
+                                <div className="aspect-video w-full rounded-md border-2 border-dashed border-input flex flex-col items-center justify-center text-muted-foreground group-hover:border-primary group-hover:text-primary transition-colors">
+                                    {previewImage ? (
+                                        <Image
+                                            src={previewImage}
+                                            alt="Cover preview"
+                                            width={400}
+                                            height={225}
+                                            className="w-full h-full object-cover rounded-md"
+                                        />
+                                    ) : (
+                                        <>
+                                            <Upload className="h-8 w-8 mb-2" />
+                                            <span>Click or drag to upload image</span>
+                                        </>
+                                    )}
+                                </div>
+                            </label>
+                        </div>
+                    </FormControl>
+                    {uploadProgress !== null && (
+                        <Progress value={uploadProgress} className="mt-2" />
+                    )}
+                    <FormMessage />
+                </FormItem>
+            )}
         />
          <FormField
           control={form.control}
@@ -304,7 +364,7 @@ export function ArticleForm({ article, authors }: ArticleFormProps) {
                 )}
              />
         </div>
-        <Button type="submit" disabled={form.formState.isSubmitting}>
+        <Button type="submit" disabled={form.formState.isSubmitting || uploadProgress !== null}>
             {form.formState.isSubmitting ? "Saving..." : (article ? "Save Changes" : "Create Article")}
         </Button>
       </form>

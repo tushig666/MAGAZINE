@@ -1,7 +1,8 @@
 // This is a temporary data store.
 // It will be replaced with Firebase Firestore.
-import { db } from '@/lib/firebase';
+import { db, storage } from '@/lib/firebase';
 import { collection, getDocs, getDoc, doc, addDoc, updateDoc, deleteDoc, query, where } from "firebase/firestore";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import type { Author, Article, Event } from "@/lib/types";
 
 // --- Seed Data (for initial setup) ---
@@ -343,4 +344,32 @@ export async function searchArticles(query: string): Promise<Article[]> {
     article.tags.some(tag => tag.toLowerCase().includes(lowercasedQuery))
   );
   return Promise.resolve(results);
+}
+
+
+export function uploadImage(
+  file: File,
+  onProgress: (progress: number) => void
+): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const storageRef = ref(storage, `article-covers/${Date.now()}_${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        onProgress(progress);
+      },
+      (error) => {
+        console.error("Image upload error:", error);
+        reject(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          resolve(downloadURL);
+        });
+      }
+    );
+  });
 }
