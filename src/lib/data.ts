@@ -212,15 +212,6 @@ export async function getAuthors(): Promise<Author[]> {
     const authorsCollection = collection(db, "authors");
     const authorSnapshot = await getDocs(authorsCollection);
     const authorsList = authorSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Author));
-
-    if (authorsList.length === 0) {
-      console.log('Seeding authors...');
-      for (const author of authorsData) {
-        await addDoc(authorsCollection, author);
-      }
-      return getAuthors();
-    }
-    
     return authorsList;
   } catch (error: any) {
     console.error("Error fetching authors: ", error.message);
@@ -261,18 +252,6 @@ export async function getArticles(category?: string): Promise<Article[]> {
 
         const articleSnapshot = await getDocs(q);
         let articlesList = articleSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Article));
-
-        if (articlesList.length === 0 && !category) {
-            console.log('Seeding articles...');
-            const authors = await getAuthors();
-            if (authors.length > 0) {
-                 for (const article of articlesData) {
-                    const author = authors[Math.floor(Math.random() * authors.length)];
-                    await addDoc(articlesCollection, { ...article, authorId: author.id });
-                }
-                return getArticles();
-            }
-        }
         
         return articlesList.sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
     } catch (error: any) {
@@ -334,14 +313,6 @@ export async function getEvents(): Promise<Event[]> {
     const eventsCollection = collection(db, "events");
     const eventSnapshot = await getDocs(eventsCollection);
     const eventsList = eventSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Event));
-    
-    if (eventsList.length === 0) {
-      console.log('Seeding events...');
-      for (const event of eventsData) {
-        await addDoc(eventsCollection, event);
-      }
-      return getEvents();
-    }
     
     return eventsList.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   } catch (error: any) {
