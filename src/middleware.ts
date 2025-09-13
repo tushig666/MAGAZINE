@@ -7,16 +7,19 @@ export function middleware(request: NextRequest) {
 
   const isAdminRoute = pathname.startsWith('/admin')
   const isLoginPage = pathname === '/admin/login'
-
+  
+  // If trying to access a protected admin route without a session, redirect to login
   if (isAdminRoute && !isLoginPage && !sessionToken) {
     return NextResponse.redirect(new URL('/admin/login', request.url))
   }
 
+  // If trying to access the login page with an active session, redirect to the dashboard
   if (isLoginPage && sessionToken) {
      return NextResponse.redirect(new URL('/admin', request.url))
   }
   
-  if (pathname === '/admin' && !pathname.endsWith('/')) {
+  // Ensure /admin always has a trailing slash for consistency
+  if (pathname === '/admin') {
       return NextResponse.redirect(new URL('/admin/', request.url));
   }
 

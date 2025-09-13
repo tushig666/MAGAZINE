@@ -28,6 +28,10 @@ export default function LoginPage() {
     setIsLoading(true);
     try {
       await login(email, password);
+      toast({
+        title: "Login Successful",
+        description: "Redirecting to dashboard...",
+      });
       router.push("/admin");
     } catch (error) {
       console.error(error);
@@ -36,6 +40,7 @@ export default function LoginPage() {
         title: "Login Failed",
         description: "Incorrect email or password. Please try again.",
       });
+    } finally {
       setIsLoading(false);
     }
   };
@@ -60,6 +65,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
+                disabled={isLoading}
               />
             </div>
             <div className="grid gap-2">
@@ -70,6 +76,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={isLoading}
               />
             </div>
           </CardContent>
